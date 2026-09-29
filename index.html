@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>77se.lect | Catalog</title>
+  <title>77SELECT | Wear What U Select</title>
   <style>
     :root {
-      --bg-color: #0f0f11;
-      --card-bg: #18181c;
-      --accent-color: #ffffff;
-      --text-main: #f0f0f0;
-      --text-muted: #a0a0a0;
-      --border-color: #2a2a30;
-      --button-bg: #e1306c; /* Instagram gradient feel */
+      --bg-color: #000000;
+      --card-bg: #0a0a0a;
+      --border-color: #222222;
+      --text-main: #ffffff;
+      --text-muted: #888888;
+      --accent: #ffffff;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     body {
@@ -28,54 +27,63 @@
       padding: 20px;
     }
 
+    /* HEADER / LOGO SECTION */
     header {
       text-align: center;
-      padding: 40px 20px;
+      padding: 50px 20px 30px 20px;
       max-width: 800px;
-      margin: 0 auto 30px auto;
+      margin: 0 auto 20px auto;
+      border-bottom: 1px solid var(--border-color);
     }
 
-    header h1 {
-      font-size: 2.5rem;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
+    .brand-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: 6px;
       text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 8px;
     }
 
-    header p {
+    .brand-tagline {
       color: var(--text-muted);
-      font-size: 1.1rem;
-      margin-bottom: 15px;
+      font-size: 0.95rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+      font-weight: 500;
     }
 
-    .ig-banner {
+    .ig-link {
       display: inline-block;
-      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-      color: white;
+      border: 1px solid var(--text-main);
+      color: var(--text-main);
       text-decoration: none;
-      padding: 10px 20px;
-      border-radius: 30px;
+      padding: 12px 28px;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       font-weight: bold;
-      transition: transform 0.2s ease;
+      transition: all 0.2s ease;
     }
 
-    .ig-banner:hover {
-      transform: scale(1.05);
+    .ig-link:hover {
+      background-color: var(--text-main);
+      color: var(--bg-color);
     }
 
+    /* CATALOG GRID */
     .catalog-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 25px;
+      gap: 30px;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 40px auto;
     }
 
     .product-card {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -83,25 +91,25 @@
     }
 
     .product-card:hover {
-      border-color: #555;
+      border-color: #444444;
     }
 
     .image-container {
       width: 100%;
-      height: 320px;
+      height: 340px;
       overflow-x: auto;
       display: flex;
       scroll-snap-type: x mandatory;
       background-color: #050505;
+      border-bottom: 1px solid var(--border-color);
     }
 
     .image-container::-webkit-scrollbar {
-      height: 6px;
+      height: 4px;
     }
 
     .image-container::-webkit-scrollbar-thumb {
-      background: #444;
-      border-radius: 3px;
+      background: #333;
     }
 
     .image-container img {
@@ -116,66 +124,78 @@
       padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .product-title {
-      font-size: 1.1rem;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .product-meta {
       display: flex;
       justify-content: space-between;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
+      letter-spacing: 1px;
     }
 
     .badge {
-      background-color: #25252b;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 0.8rem;
+      border: 1px solid #333;
+      padding: 2px 6px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
     }
 
     .product-price {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: bold;
       margin-top: 5px;
+      letter-spacing: 1px;
     }
 
-    .btn-buy {
+    .btn-dm {
       display: block;
       text-align: center;
-      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
-      color: white;
+      background-color: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--text-main);
       text-decoration: none;
       padding: 12px;
-      border-radius: 8px;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       font-weight: bold;
       margin-top: 10px;
-      transition: opacity 0.2s ease;
+      transition: all 0.2s ease;
     }
 
-    .btn-buy:hover {
-      opacity: 0.9;
+    .btn-dm:hover {
+      background-color: var(--text-main);
+      color: var(--bg-color);
     }
 
     footer {
       text-align: center;
-      padding: 40px;
+      padding: 50px 20px;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-top: 1px solid var(--border-color);
+      margin-top: 50px;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>77SE.LECT</h1>
-    <p>Ak máš o niektorý kúsok záujem, napíš mi správu na Instagrame!</p>
-    <a href="https://instagram.com/77se.lect" target="_blank" class="ig-banner">
-      DM na Instagram: @77se.lect
+    <div class="brand-title">77SELECT</div>
+    <div class="brand-tagline">WEAR WHAT U SELECT</div>
+    <a href="https://ig.me/m/77se.lect" target="_blank" class="ig-link">
+      DM FOR PURCHASE (@77SE.LECT)
     </a>
   </header>
 
@@ -189,11 +209,11 @@
       <div class="product-info">
         <div class="product-title">Nike Air Force 1 Low x Supreme</div>
         <div class="product-meta">
-          <span>Veľkosť: 45.5</span>
+          <span>SIZE: 45.5</span>
           <span class="badge">SH (8/10)</span>
         </div>
         <div class="product-price">50 €</div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-buy">Mám záujem (DM)</a>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-dm">MÁM ZÁUJEM (DM)</a>
       </div>
     </div>
 
@@ -207,11 +227,11 @@
       <div class="product-info">
         <div class="product-title">DSQUARED2 Distressed Jeans</div>
         <div class="product-meta">
-          <span>Veľkosť: M</span>
+          <span>SIZE: M</span>
           <span class="badge">NEW</span>
         </div>
         <div class="product-price">50 €</div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-buy">Mám záujem (DM)</a>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-dm">MÁM ZÁUJEM (DM)</a>
       </div>
     </div>
 
@@ -226,11 +246,11 @@
       <div class="product-info">
         <div class="product-title">Nike Air Max 95 Triple Black</div>
         <div class="product-meta">
-          <span>Veľkosť: 44</span>
+          <span>SIZE: 44</span>
           <span class="badge">SH (6/10)</span>
         </div>
         <div class="product-price">35 €</div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-buy">Mám záujem (DM)</a>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-dm">MÁM ZÁUJEM (DM)</a>
       </div>
     </div>
 
@@ -243,11 +263,11 @@
       <div class="product-info">
         <div class="product-title">Supply & Demand Jeans</div>
         <div class="product-meta">
-          <span>Veľkosť: M</span>
+          <span>SIZE: M</span>
           <span class="badge">NEW</span>
         </div>
         <div class="product-price">25 €</div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-buy">Mám záujem (DM)</a>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-dm">MÁM ZÁUJEM (DM)</a>
       </div>
     </div>
 
@@ -260,11 +280,11 @@
       <div class="product-info">
         <div class="product-title">Moncler Modré Polo Tričko</div>
         <div class="product-meta">
-          <span>Veľkosť: S</span>
+          <span>SIZE: S</span>
           <span class="badge">SH (9/10)</span>
         </div>
         <div class="product-price">40 €</div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-buy">Mám záujem (DM)</a>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-dm">MÁM ZÁUJEM (DM)</a>
       </div>
     </div>
 
@@ -277,11 +297,11 @@
       <div class="product-info">
         <div class="product-title">Louis Vuitton Holografický Opasok</div>
         <div class="product-meta">
-          <span>Veľkosť: S</span>
+          <span>SIZE: S</span>
           <span class="badge">SH (9/10)</span>
         </div>
         <div class="product-price">30 €</div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-buy">Mám záujem (DM)</a>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-dm">MÁM ZÁUJEM (DM)</a>
       </div>
     </div>
 
@@ -295,11 +315,11 @@
       <div class="product-info">
         <div class="product-title">Gianni Kavanagh Jeans s Nášivkami</div>
         <div class="product-meta">
-          <span>Veľkosť: S</span>
+          <span>SIZE: S</span>
           <span class="badge">NEW</span>
         </div>
         <div class="product-price">40 €</div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-buy">Mám záujem (DM)</a>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-dm">MÁM ZÁUJEM (DM)</a>
       </div>
     </div>
 
@@ -311,11 +331,11 @@
       <div class="product-info">
         <div class="product-title">Grey Short "ninetytwo"</div>
         <div class="product-meta">
-          <span>Veľkosť: M</span>
+          <span>SIZE: M</span>
           <span class="badge">SH (9/10)</span>
         </div>
         <div class="product-price">30 €</div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-buy">Mám záujem (DM)</a>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-dm">MÁM ZÁUJEM (DM)</a>
       </div>
     </div>
 
@@ -327,11 +347,11 @@
       <div class="product-info">
         <div class="product-title">Nike FC Barcelona Tréningové Nohavice</div>
         <div class="product-meta">
-          <span>Veľkosť: S</span>
+          <span>SIZE: S</span>
           <span class="badge">NEW</span>
         </div>
         <div class="product-price">30 €</div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-buy">Mám záujem (DM)</a>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-dm">MÁM ZÁUJEM (DM)</a>
       </div>
     </div>
 
@@ -343,11 +363,11 @@
       <div class="product-info">
         <div class="product-title">Lacoste Biela Mikina s Kapucňou</div>
         <div class="product-meta">
-          <span>Veľkosť: M</span>
+          <span>SIZE: M</span>
           <span class="badge">NEW</span>
         </div>
         <div class="product-price">30 €</div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-buy">Mám záujem (DM)</a>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-dm">MÁM ZÁUJEM (DM)</a>
       </div>
     </div>
 
@@ -360,18 +380,18 @@
       <div class="product-info">
         <div class="product-title">Denim Tears Cotton Wreath Mikina</div>
         <div class="product-meta">
-          <span>Veľkosť: M</span>
+          <span>SIZE: M</span>
           <span class="badge">NEW</span>
         </div>
         <div class="product-price">40 €</div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-buy">Mám záujem (DM)</a>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="btn-dm">MÁM ZÁUJEM (DM)</a>
       </div>
     </div>
 
   </main>
 
   <footer>
-    <p>&copy; 2026 77se.lect. Všetky práva vyhradené.</p>
+    &copy; 77SELECT — WEAR WHAT U SELECT
   </footer>
 
 </body>
