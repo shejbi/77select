@@ -131,7 +131,7 @@
       </div>
 
       <div class="products" id="productGrid">
-        <!-- Produkty sa načítajú automaticky cez JavaScript nižšie -->
+        <!-- Vykresľuje JavaScript -->
       </div>
     </section>
 
@@ -142,23 +142,21 @@
     </section>
   </main>
 
-  <!-- MODAL / DETAIL OKNO -->
+  <!-- MODAL DETAIL OKNO -->
   <div class="modal-overlay" id="modal">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal()">✕</button>
       <div class="gallery-container">
-        <button class="gallery-btn prev" onclick="changeImage(-1)">❮</button>
+        <button class="gallery-btn prev" id="prevBtn" onclick="changeImage(-1)">❮</button>
         <img id="modalImg" src="" alt="Detail produktu">
-        <button class="gallery-btn next" onclick="changeImage(1)">❯</button>
+        <button class="gallery-btn next" id="nextBtn" onclick="changeImage(1)">❯</button>
       </div>
       <div class="modal-details">
         <div>
           <span class="modal-tag" id="modalTag">NEW</span>
           <h2 class="modal-title" id="modalTitle">Názov produktu</h2>
           <div class="modal-price" id="modalPrice">0 €</div>
-          <div class="modal-meta" id="modalMeta">
-            <!-- Detaily -->
-          </div>
+          <div class="modal-meta" id="modalMeta"></div>
         </div>
         <a href="https://ig.me/m/77se.lect" target="_blank" class="modal-btn">MÁM ZÁUJEM (POSLAŤ DM) ↗</a>
       </div>
@@ -171,7 +169,7 @@
   </footer>
 
   <script>
-    // SEM MÔŽEŠ DOPĹŇAŤ A UPRAVOVAŤ FOTKY PRE KAŽDÝ PRODUKT
+    // PRESNÝ ZOZNAM PRODUKTOV S ICH VLASTNÝMI OBRÁZKAMI
     const products = [
       {
         id: 1,
@@ -180,7 +178,7 @@
         tag: "SECOND HAND (8/10)",
         size: "45.5",
         desc: "Stav 8/10, minimálne nosené, bez poškodení. Dodávané bez krabice.",
-        images: ["IMG_2958.jpeg", "IMG_2955.jpeg", "IMG_2956.jpeg"]
+        images: ["IMG_2958.jpeg"]
       },
       {
         id: 2,
@@ -189,7 +187,7 @@
         tag: "NEW",
         size: "M",
         desc: "Úplne nové nohavice s visačkou. Kvalitný džínový materiál s distressed detailmi.",
-        images: ["IMG_2961.jpeg", "IMG_2959.jpeg", "IMG_2960.jpeg"]
+        images: ["IMG_2961.jpeg"]
       },
       {
         id: 3,
@@ -197,17 +195,17 @@
         price: "35 €",
         tag: "SECOND HAND (6/10)",
         size: "44",
-        desc: "Stav 6/10. Mierne známky používania, podrážka v dobrom stave.",
-        images: ["IMG_2965.jpeg", "IMG_2962.jpeg", "IMG_2963.jpeg", "IMG_2964.jpeg"]
+        desc: "Stav 6/10. Mierne známky používania, podrážka v dobróm stave.",
+        images: ["IMG_2965.jpeg"]
       },
       {
         id: 4,
-        name: "Supply & Demand Jeans",
-        price: "25 €",
-        tag: "NEW",
+        name: "Moncler Vesta",
+        price: "60 €",
+        tag: "SECOND HAND (9/10)",
         size: "M",
-        desc: "Nové džínsy, slim fit strih.",
-        images: ["IMG_2977.jpeg", "IMG_2978.jpeg"]
+        desc: "Púperová vesta Moncler, výborný stav bez poškodení.",
+        images: ["IMG_2970.jpeg"] // Ak máš iné číslo fotky pre vestu, stačí upraviť tu
       },
       {
         id: 5,
@@ -216,61 +214,70 @@
         tag: "SECOND HAND (9/10)",
         size: "S",
         desc: "Ako nové, nosené len párkrát. 100% bavlna.",
-        images: ["IMG_2979.jpeg", "IMG_2980.jpeg"]
+        images: ["IMG_2979.jpeg"]
       },
       {
         id: 6,
+        name: "Supply & Demand Jeans",
+        price: "25 €",
+        tag: "NEW",
+        size: "M",
+        desc: "Nové džínsy, slim fit strih.",
+        images: ["IMG_2977.jpeg"]
+      },
+      {
+        id: 7,
         name: "Louis Vuitton Holografický Opasok",
         price: "30 €",
         tag: "SECOND HAND (9/10)",
         size: "S (85 cm)",
         desc: "Unikátny holografický dizajn s kovovou prackou.",
-        images: ["IMG_2975.jpeg", "IMG_2976.jpeg"]
+        images: ["IMG_2975.jpeg"]
       },
       {
-        id: 7,
-        name: "Gianni Kavanagh Jeans s Nášivkami",
+        id: 8,
+        name: "Gianni Kavanagh Jeans",
         price: "40 €",
         tag: "NEW",
         size: "S",
         desc: "Nové džínsy so štýlovými nášivkami.",
-        images: ["IMG_2981.jpeg", "IMG_2982.jpeg", "IMG_2983.jpeg"]
+        images: ["IMG_2981.jpeg"]
       },
       {
-        id: 8,
+        id: 9,
         name: "Grey Short \"ninetytwo\"",
         price: "30 €",
         tag: "SECOND HAND (9/10)",
         size: "M",
         desc: "Pohodlné kraťasy, bez známok opotrebenia.",
-        images: ["IMG_2966.jpeg", "IMG_2967.jpeg"]
-      },
-      {
-        id: 9,
-        name: "Nike FC Barcelona Tréningové Nohavice",
-        price: "30 €",
-        tag: "NEW",
-        size: "S",
-        desc: "Nové tréningové tepláky Barca.",
-        images: ["IMG_2968.jpeg", "IMG_2969.jpeg"]
+        images: ["IMG_2966.jpeg"]
       },
       {
         id: 10,
+        name: "Nike FC Barcelona Longsleeve / Dres",
+        price: "30 €",
+        tag: "NEW",
+        size: "S",
+        desc: "Tréningový dres / longsleeve Nike FC Barcelona.",
+        images: ["IMG_2968.jpeg", "IMG_2955.jpeg"] // Tvoj obrázok z fotky
+      },
+      {
+        id: 11,
         name: "Lacoste Biela Mikina s Kapucňou",
         price: "30 €",
         tag: "NEW",
         size: "M",
-        desc: "Čistá biela mikina Lacoste.",
+        desc: "Čistá biela mikina Lacoste s kapucňou.",
         images: ["IMG_2957.jpeg"]
       },
       {
-        id: 11,
+        id: 12,
         name: "Denim Tears Cotton Wreath Mikina",
         price: "40 €",
         tag: "NEW",
         size: "M",
-        desc: "Stredne hrubá mikina s ikonickým potlačou.",
-        images: ["IMG_2972.jpeg", "IMG_2971.jpeg"]
+        desc: "Stredne hrubá mikina s ikonickou potlačou.",
+        images: ["IMG_2972.jpeg"]
       }
     ];
 
@@ -278,8 +285,8 @@
     let currentImageIndex = 0;
 
     // Vykreslenie produktov
-    const grid = id => document.getElementById(id);
-    grid('productGrid').innerHTML = products.map(p => `
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = products.map(p => `
       <article class="product" onclick="openModal(${p.id})">
         <div class="product-image-container">
           <span class="tag">${p.tag}</span>
@@ -319,10 +326,21 @@
         <strong>FOTKA:</strong> ${currentImageIndex + 1} z ${currentProduct.images.length}
       `;
       document.getElementById('modalImg').src = currentProduct.images[currentImageIndex];
+
+      // Skryť šípky, ak produkt má iba 1 fotku
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      if (currentProduct.images.length <= 1) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+      } else {
+        prevBtn.style.display = 'block';
+        nextBtn.style.display = 'block';
+      }
     }
 
     function changeImage(dir) {
-      if (!currentProduct) return;
+      if (!currentProduct || currentProduct.images.length <= 1) return;
       currentImageIndex = (currentImageIndex + dir + currentProduct.images.length) % currentProduct.images.length;
       updateModalContent();
     }
