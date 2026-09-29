@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>77SELECT — Wear What You Select</title>
-  <meta name="description" content="77SELECT — curated new & second-hand clothing.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
 :root{--black:#0a0a0a;--white:#f5f5f2;--line:#d7d7d2;--muted:#777;--pad:clamp(18px,4vw,56px)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--white);color:var(--black);font-family:Inter,Arial,sans-serif}a{color:inherit;text-decoration:none}
+
 .header{height:76px;padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--black);position:sticky;top:0;background:rgba(245,245,242,.94);backdrop-filter:blur(12px);z-index:20}
 .logo{font-size:22px;font-weight:900;letter-spacing:-1.5px}.logo span{font-weight:500;margin-left:3px}
 .nav{display:flex;gap:32px;font-size:11px;font-weight:700;letter-spacing:1px}
@@ -37,14 +37,15 @@
 .section-head h2{font-size:clamp(44px,7vw,92px);letter-spacing:-.06em;margin:0;line-height:.9}
 
 .products{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--black);border:1px solid var(--black)}
-.product{background:var(--white);position:relative;display:flex;flex-direction:column;justify-content:space-between}
+.product{background:var(--white);position:relative;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform 0.2s}
+.product:hover{transform:translateY(-3px)}
 
-.product-image-container{aspect-ratio:4/5;background:#eee;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;position:relative}
-.product-image-container::-webkit-scrollbar{height:3px}
-.product-image-container::-webkit-scrollbar-thumb{background:var(--black)}
-.product-image-container img{width:100%;height:100%;object-fit:cover;flex-shrink:0;scroll-snap-align:start}
+.product-image-container{aspect-ratio:4/5;background:#eee;position:relative;overflow:hidden}
+.product-image-container img{width:100%;height:100%;object-fit:cover;display:block}
 
 .tag{position:absolute;left:12px;top:12px;background:var(--black);color:white;padding:6px 8px;font-size:8px;font-weight:800;letter-spacing:1px;z-index:2}
+.photo-count-badge{position:absolute;right:12px;bottom:12px;background:rgba(0,0,0,0.7);color:white;padding:4px 8px;font-size:10px;font-weight:700;border-radius:3px}
+
 .product-info{padding:20px;display:flex;flex-direction:column;gap:8px}
 .product-row{display:flex;justify-content:space-between;gap:10px}
 .product-name{font-size:14px;font-weight:800;text-transform:uppercase}
@@ -53,22 +54,41 @@
 .add{width:100%;margin-top:12px;padding:13px;border:1px solid var(--black);background:transparent;font-size:9px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-align:center;display:block}
 .add:hover{background:var(--black);color:white}
 
+/* MODAL OKNO FOR DETAIL */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:100;padding:20px}
+.modal-overlay.active{display:flex}
+.modal-content{background:var(--white);max-width:900px;width:100%;max-height:90vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;position:relative;border:1px solid var(--black)}
+.modal-close{position:absolute;top:15px;right:15px;background:var(--black);color:white;border:none;width:36px;height:36px;font-size:20px;cursor:pointer;z-index:10;display:grid;place-items:center}
+
+.gallery-container{position:relative;background:#000;display:flex;align-items:center;justify-content:center;aspect-ratio:4/5}
+.gallery-container img{max-width:100%;max-height:100%;object-fit:contain}
+.gallery-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.8);border:none;width:40px;height:40px;font-size:18px;font-weight:bold;cursor:pointer;z-index:5}
+.gallery-btn:hover{background:#fff}
+.gallery-btn.prev{left:10px}
+.gallery-btn.next{right:10px}
+
+.modal-details{padding:40px;display:flex;flex-direction:column;justify-content:space-between;overflow-y:auto}
+.modal-tag{align-self:flex-start;background:var(--black);color:white;padding:6px 10px;font-size:9px;font-weight:800;letter-spacing:1px;margin-bottom:15px}
+.modal-title{font-size:24px;font-weight:900;margin:0 0 10px;text-transform:uppercase}
+.modal-price{font-size:22px;font-weight:900;margin-bottom:20px}
+.modal-meta{font-size:13px;color:#555;margin-bottom:25px;line-height:1.6;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0}
+.modal-btn{background:var(--black);color:white;padding:16px;text-align:center;font-size:11px;font-weight:800;letter-spacing:1.5px;display:block}
+.modal-btn:hover{opacity:0.9}
+
 .manifesto{background:var(--black);color:var(--white);min-height:60vh;display:flex;flex-direction:column;justify-content:center}
 .manifesto h2{font-size:clamp(48px,9vw,125px);letter-spacing:-.07em;line-height:.86;margin:0 0 30px}
 .manifesto h2 span{font-weight:400}
 .manifesto p{max-width:580px;color:#bbb;line-height:1.7;font-size:14px}
 
 .footer{border-top:1px solid var(--black);padding:35px var(--pad);display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:10px;font-weight:700;letter-spacing:1px}
-.footer-links{display:flex;gap:20px}
 
-@media(max-width:900px){.products{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.products{grid-template-columns:repeat(2,1fr)}.modal-content{grid-template-columns:1fr;max-height:85vh;overflow-y:auto}}
 @media(max-width:760px){
   .nav{display:none}
   .hero{grid-template-columns:1fr}
   .hero-art{min-height:40vh}
   .circle{width:200px;height:200px}
   .products{grid-template-columns:1fr}
-  .footer{flex-direction:column;text-align:center}
 }
   </style>
 </head>
@@ -110,199 +130,8 @@
         </div>
       </div>
 
-      <div class="products">
-
-        <!-- 1 -->
-        <article class="product">
-          <span class="tag">SECOND HAND (8/10)</span>
-          <div class="product-image-container">
-            <img src="IMG_2955.jpeg" alt="Nike Air Force 1 Low x Supreme 1">
-            <img src="IMG_2956.jpeg" alt="Nike Air Force 1 Low x Supreme 2">
-            <img src="IMG_2958.jpeg" alt="Nike Air Force 1 Low x Supreme 3">
-          </div>
-          <div class="product-info">
-            <div class="product-row">
-              <span class="product-name">Nike Air Force 1 Low x Supreme</span>
-              <span class="price">50 €</span>
-            </div>
-            <div class="meta">SIZE: 45.5</div>
-            <a href="https://ig.me/m/77se.lect" target="_blank" class="add">MÁM ZÁUJEM (DM) ↗</a>
-          </div>
-        </article>
-
-        <!-- 2 -->
-        <article class="product">
-          <span class="tag">NEW</span>
-          <div class="product-image-container">
-            <img src="IMG_2961.jpeg" alt="DSQUARED2 Jeans 1">
-            <img src="IMG_2959.jpeg" alt="DSQUARED2 Jeans 2">
-            <img src="IMG_2960.jpeg" alt="DSQUARED2 Jeans 3">
-          </div>
-          <div class="product-info">
-            <div class="product-row">
-              <span class="product-name">DSQUARED2 Distressed Jeans</span>
-              <span class="price">50 €</span>
-            </div>
-            <div class="meta">SIZE: M</div>
-            <a href="https://ig.me/m/77se.lect" target="_blank" class="add">MÁM ZÁUJEM (DM) ↗</a>
-          </div>
-        </article>
-
-        <!-- 3 -->
-        <article class="product">
-          <span class="tag">SECOND HAND (6/10)</span>
-          <div class="product-image-container">
-            <img src="IMG_2965.jpeg" alt="Nike Air Max 95 1">
-            <img src="IMG_2962.jpeg" alt="Nike Air Max 95 2">
-            <img src="IMG_2963.jpeg" alt="Nike Air Max 95 3">
-            <img src="IMG_2964.jpeg" alt="Nike Air Max 95 4">
-          </div>
-          <div class="product-info">
-            <div class="product-row">
-              <span class="product-name">Nike Air Max 95 Triple Black</span>
-              <span class="price">35 €</span>
-            </div>
-            <div class="meta">SIZE: 44</div>
-            <a href="https://ig.me/m/77se.lect" target="_blank" class="add">MÁM ZÁUJEM (DM) ↗</a>
-          </div>
-        </article>
-
-        <!-- 4 -->
-        <article class="product">
-          <span class="tag">NEW</span>
-          <div class="product-image-container">
-            <img src="IMG_2977.jpeg" alt="Supply & Demand Jeans 1">
-            <img src="IMG_2978.jpeg" alt="Supply & Demand Jeans 2">
-          </div>
-          <div class="product-info">
-            <div class="product-row">
-              <span class="product-name">Supply & Demand Jeans</span>
-              <span class="price">25 €</span>
-            </div>
-            <div class="meta">SIZE: M</div>
-            <a href="https://ig.me/m/77se.lect" target="_blank" class="add">MÁM ZÁUJEM (DM) ↗</a>
-          </div>
-        </article>
-
-        <!-- 5 -->
-        <article class="product">
-          <span class="tag">SECOND HAND (9/10)</span>
-          <div class="product-image-container">
-            <img src="IMG_2979.jpeg" alt="Moncler Polo 1">
-            <img src="IMG_2980.jpeg" alt="Moncler Polo 2">
-          </div>
-          <div class="product-info">
-            <div class="product-row">
-              <span class="product-name">Moncler Modré Polo Tričko</span>
-              <span class="price">40 €</span>
-            </div>
-            <div class="meta">SIZE: S</div>
-            <a href="https://ig.me/m/77se.lect" target="_blank" class="add">MÁM ZÁUJEM (DM) ↗</a>
-          </div>
-        </article>
-
-        <!-- 6 -->
-        <article class="product">
-          <span class="tag">SECOND HAND (9/10)</span>
-          <div class="product-image-container">
-            <img src="IMG_2975.jpeg" alt="Louis Vuitton Opasok 1">
-            <img src="IMG_2976.jpeg" alt="Louis Vuitton Opasok 2">
-          </div>
-          <div class="product-info">
-            <div class="product-row">
-              <span class="product-name">Louis Vuitton Holografický Opasok</span>
-              <span class="price">30 €</span>
-            </div>
-            <div class="meta">SIZE: S</div>
-            <a href="https://ig.me/m/77se.lect" target="_blank" class="add">MÁM ZÁUJEM (DM) ↗</a>
-          </div>
-        </article>
-
-        <!-- 7 -->
-        <article class="product">
-          <span class="tag">NEW</span>
-          <div class="product-image-container">
-            <img src="IMG_2981.jpeg" alt="Gianni Kavanagh Jeans 1">
-            <img src="IMG_2982.jpeg" alt="Gianni Kavanagh Jeans 2">
-            <img src="IMG_2983.jpeg" alt="Gianni Kavanagh Jeans 3">
-          </div>
-          <div class="product-info">
-            <div class="product-row">
-              <span class="product-name">Gianni Kavanagh Jeans s Nášivkami</span>
-              <span class="price">40 €</span>
-            </div>
-            <div class="meta">SIZE: S</div>
-            <a href="https://ig.me/m/77se.lect" target="_blank" class="add">MÁM ZÁUJEM (DM) ↗</a>
-          </div>
-        </article>
-
-        <!-- 8 -->
-        <article class="product">
-          <span class="tag">SECOND HAND (9/10)</span>
-          <div class="product-image-container">
-            <img src="IMG_2966.jpeg" alt="Grey Short ninetytwo 1">
-            <img src="IMG_2967.jpeg" alt="Grey Short ninetytwo 2">
-          </div>
-          <div class="product-info">
-            <div class="product-row">
-              <span class="product-name">Grey Short "ninetytwo"</span>
-              <span class="price">30 €</span>
-            </div>
-            <div class="meta">SIZE: M</div>
-            <a href="https://ig.me/m/77se.lect" target="_blank" class="add">MÁM ZÁUJEM (DM) ↗</a>
-          </div>
-        </article>
-
-        <!-- 9 -->
-        <article class="product">
-          <span class="tag">NEW</span>
-          <div class="product-image-container">
-            <img src="IMG_2968.jpeg" alt="Nike FC Barcelona Pants 1">
-            <img src="IMG_2969.jpeg" alt="Nike FC Barcelona Pants 2">
-          </div>
-          <div class="product-info">
-            <div class="product-row">
-              <span class="product-name">Nike FC Barcelona Tréningové Nohavice</span>
-              <span class="price">30 €</span>
-            </div>
-            <div class="meta">SIZE: S</div>
-            <a href="https://ig.me/m/77se.lect" target="_blank" class="add">MÁM ZÁUJEM (DM) ↗</a>
-          </div>
-        </article>
-
-        <!-- 10 -->
-        <article class="product">
-          <span class="tag">NEW</span>
-          <div class="product-image-container">
-            <img src="IMG_2957.jpeg" alt="Lacoste Mikina">
-          </div>
-          <div class="product-info">
-            <div class="product-row">
-              <span class="product-name">Lacoste Biela Mikina s Kapucňou</span>
-              <span class="price">30 €</span>
-            </div>
-            <div class="meta">SIZE: M</div>
-            <a href="https://ig.me/m/77se.lect" target="_blank" class="add">MÁM ZÁUJEM (DM) ↗</a>
-          </div>
-        </article>
-
-        <!-- 11 -->
-        <article class="product">
-          <span class="tag">NEW</span>
-          <div class="product-image-container">
-            <img src="IMG_2972.jpeg" alt="Denim Tears Mikina 1">
-            <img src="IMG_2971.jpeg" alt="Denim Tears Mikina 2">
-          </div>
-          <div class="product-info">
-            <div class="product-row">
-              <span class="product-name">Denim Tears Cotton Wreath Mikina</span>
-              <span class="price">40 €</span>
-            </div>
-            <div class="meta">SIZE: M</div>
-            <a href="https://ig.me/m/77se.lect" target="_blank" class="add">MÁM ZÁUJEM (DM) ↗</a>
-          </div>
-        </article>
-
+      <div class="products" id="productGrid">
+        <!-- Produkty sa načítajú automaticky cez JavaScript nižšie -->
       </div>
     </section>
 
@@ -313,13 +142,190 @@
     </section>
   </main>
 
+  <!-- MODAL / DETAIL OKNO -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="gallery-container">
+        <button class="gallery-btn prev" onclick="changeImage(-1)">❮</button>
+        <img id="modalImg" src="" alt="Detail produktu">
+        <button class="gallery-btn next" onclick="changeImage(1)">❯</button>
+      </div>
+      <div class="modal-details">
+        <div>
+          <span class="modal-tag" id="modalTag">NEW</span>
+          <h2 class="modal-title" id="modalTitle">Názov produktu</h2>
+          <div class="modal-price" id="modalPrice">0 €</div>
+          <div class="modal-meta" id="modalMeta">
+            <!-- Detaily -->
+          </div>
+        </div>
+        <a href="https://ig.me/m/77se.lect" target="_blank" class="modal-btn">MÁM ZÁUJEM (POSLAŤ DM) ↗</a>
+      </div>
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="logo">77<span>SELECT</span></div>
     <p>© 2026 77SELECT. ALL RIGHTS RESERVED.</p>
-    <div class="footer-links">
-      <a href="https://instagram.com/77se.lect" target="_blank">Instagram (@77se.lect)</a>
-    </div>
   </footer>
 
+  <script>
+    // SEM MÔŽEŠ DOPĹŇAŤ A UPRAVOVAŤ FOTKY PRE KAŽDÝ PRODUKT
+    const products = [
+      {
+        id: 1,
+        name: "Nike Air Force 1 Low x Supreme",
+        price: "50 €",
+        tag: "SECOND HAND (8/10)",
+        size: "45.5",
+        desc: "Stav 8/10, minimálne nosené, bez poškodení. Dodávané bez krabice.",
+        images: ["IMG_2958.jpeg", "IMG_2955.jpeg", "IMG_2956.jpeg"]
+      },
+      {
+        id: 2,
+        name: "DSQUARED2 Distressed Jeans",
+        price: "50 €",
+        tag: "NEW",
+        size: "M",
+        desc: "Úplne nové nohavice s visačkou. Kvalitný džínový materiál s distressed detailmi.",
+        images: ["IMG_2961.jpeg", "IMG_2959.jpeg", "IMG_2960.jpeg"]
+      },
+      {
+        id: 3,
+        name: "Nike Air Max 95 Triple Black",
+        price: "35 €",
+        tag: "SECOND HAND (6/10)",
+        size: "44",
+        desc: "Stav 6/10. Mierne známky používania, podrážka v dobrom stave.",
+        images: ["IMG_2965.jpeg", "IMG_2962.jpeg", "IMG_2963.jpeg", "IMG_2964.jpeg"]
+      },
+      {
+        id: 4,
+        name: "Supply & Demand Jeans",
+        price: "25 €",
+        tag: "NEW",
+        size: "M",
+        desc: "Nové džínsy, slim fit strih.",
+        images: ["IMG_2977.jpeg", "IMG_2978.jpeg"]
+      },
+      {
+        id: 5,
+        name: "Moncler Modré Polo Tričko",
+        price: "40 €",
+        tag: "SECOND HAND (9/10)",
+        size: "S",
+        desc: "Ako nové, nosené len párkrát. 100% bavlna.",
+        images: ["IMG_2979.jpeg", "IMG_2980.jpeg"]
+      },
+      {
+        id: 6,
+        name: "Louis Vuitton Holografický Opasok",
+        price: "30 €",
+        tag: "SECOND HAND (9/10)",
+        size: "S (85 cm)",
+        desc: "Unikátny holografický dizajn s kovovou prackou.",
+        images: ["IMG_2975.jpeg", "IMG_2976.jpeg"]
+      },
+      {
+        id: 7,
+        name: "Gianni Kavanagh Jeans s Nášivkami",
+        price: "40 €",
+        tag: "NEW",
+        size: "S",
+        desc: "Nové džínsy so štýlovými nášivkami.",
+        images: ["IMG_2981.jpeg", "IMG_2982.jpeg", "IMG_2983.jpeg"]
+      },
+      {
+        id: 8,
+        name: "Grey Short \"ninetytwo\"",
+        price: "30 €",
+        tag: "SECOND HAND (9/10)",
+        size: "M",
+        desc: "Pohodlné kraťasy, bez známok opotrebenia.",
+        images: ["IMG_2966.jpeg", "IMG_2967.jpeg"]
+      },
+      {
+        id: 9,
+        name: "Nike FC Barcelona Tréningové Nohavice",
+        price: "30 €",
+        tag: "NEW",
+        size: "S",
+        desc: "Nové tréningové tepláky Barca.",
+        images: ["IMG_2968.jpeg", "IMG_2969.jpeg"]
+      },
+      {
+        id: 10,
+        name: "Lacoste Biela Mikina s Kapucňou",
+        price: "30 €",
+        tag: "NEW",
+        size: "M",
+        desc: "Čistá biela mikina Lacoste.",
+        images: ["IMG_2957.jpeg"]
+      },
+      {
+        id: 11,
+        name: "Denim Tears Cotton Wreath Mikina",
+        price: "40 €",
+        tag: "NEW",
+        size: "M",
+        desc: "Stredne hrubá mikina s ikonickým potlačou.",
+        images: ["IMG_2972.jpeg", "IMG_2971.jpeg"]
+      }
+    ];
+
+    let currentProduct = null;
+    let currentImageIndex = 0;
+
+    // Vykreslenie produktov
+    const grid = id => document.getElementById(id);
+    grid('productGrid').innerHTML = products.map(p => `
+      <article class="product" onclick="openModal(${p.id})">
+        <div class="product-image-container">
+          <span class="tag">${p.tag}</span>
+          <img src="${p.images[0]}" onerror="this.src='https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600'" alt="${p.name}">
+          ${p.images.length > 1 ? `<span class="photo-count-badge">1 / ${p.images.length} 📷</span>` : ''}
+        </div>
+        <div class="product-info">
+          <div class="product-row">
+            <span class="product-name">${p.name}</span>
+            <span class="price">${p.price}</span>
+          </div>
+          <div class="meta">SIZE: ${p.size}</div>
+          <button class="add">ZOBRAZIŤ DETAIL A FOTKY ↗</button>
+        </div>
+      </article>
+    `).join('');
+
+    // Modal funkcie
+    function openModal(id) {
+      currentProduct = products.find(p => p.id === id);
+      currentImageIndex = 0;
+      updateModalContent();
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+    }
+
+    function updateModalContent() {
+      document.getElementById('modalTag').innerText = currentProduct.tag;
+      document.getElementById('modalTitle').innerText = currentProduct.name;
+      document.getElementById('modalPrice').innerText = currentProduct.price;
+      document.getElementById('modalMeta').innerHTML = `
+        <strong>VEĽKOSŤ:</strong> ${currentProduct.size}<br><br>
+        <strong>POPIS:</strong> ${currentProduct.desc}<br><br>
+        <strong>FOTKA:</strong> ${currentImageIndex + 1} z ${currentProduct.images.length}
+      `;
+      document.getElementById('modalImg').src = currentProduct.images[currentImageIndex];
+    }
+
+    function changeImage(dir) {
+      if (!currentProduct) return;
+      currentImageIndex = (currentImageIndex + dir + currentProduct.images.length) % currentProduct.images.length;
+      updateModalContent();
+    }
+  </script>
 </body>
 </html>
