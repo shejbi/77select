@@ -129,7 +129,6 @@
       <a href="#second-hand">SECOND HAND</a>
       <a href="#about">ABOUT</a>
     </nav>
-    <!-- Nastav si sem svoj vlastný username z Instagramu -->
     <a href="https://instagram.com/77select" target="_blank" class="ig-btn">INSTAGRAM ↗</a>
   </header>
 
@@ -194,7 +193,7 @@
     </div>
   </footer>
 
-  <!-- Modal Detail Produktu (Fotky & Info) -->
+  <!-- Modal Detail Produktu -->
   <div class="modal" id="productModal">
     <div class="modal-content">
       <button class="modal-close" id="closeModal">×</button>
@@ -215,7 +214,6 @@
   <div class="overlay" id="overlay"></div>
 
   <script>
-    // Nastav si sem svoj presný Instagram profil
     const INSTAGRAM_PROFILE = "77select";
 
     const products = [
@@ -261,7 +259,6 @@
       }).join("");
     }
 
-    // Modal
     const modal = document.getElementById("productModal");
     const modalMainImg = document.getElementById("modalMainImg");
     const modalThumbs = document.getElementById("modalThumbs");
@@ -305,7 +302,6 @@
     document.getElementById("closeModal").onclick = closeModal;
     document.querySelector("#overlay").onclick = closeModal;
 
-    // Filtre
     document.querySelectorAll(".filter").forEach(b => b.onclick = () => {
       document.querySelectorAll(".filter").forEach(x => x.classList.remove("active"));
       b.classList.add("active");
