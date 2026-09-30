@@ -22,19 +22,19 @@
   <script>
     const data = {
       "items": [
-        { "brand": "Gianni Kavanagh", "category": "Rifle / Džínsy", "images": ["gianni1.jpg", "gianni2.jpg", "gianni3.jpg"] },
-        { "brand": "Ninetytwo", "category": "Teplákové kraťasy", "images": ["GreyShort1.jpg"] },
-        { "brand": "Lacoste", "category": "Mikina s kapucňou", "images": ["lacoste1.jpg"] },
-        { "brand": "Louis Vuitton", "category": "Opasok", "images": ["luis1.jpg", "luis2.jpg"] },
-        { "brand": "Moncler", "category": "Polo tričko", "images": ["moncler1.jpg", "moncler2.jpg"] },
-        { "brand": "Moncler", "category": "Vesta", "images": ["monclervesta1.jpg"] },
-        { "brand": "Nike / FC Barcelona", "category": "Tepláky", "images": ["nike1.jpg", "nike2.jpg"] },
-        { "brand": "Supply & Demand", "category": "Teplákové kraťasy", "images": ["supplykratase1.jpg", "supplykratase2.jpg"] },
-        { "brand": "Supply & Demand", "category": "Rifle / Džínsy", "images": ["supplyrifle1.jpg", "supplyrifle2.jpg"] },
-        { "brand": "Under Armour", "category": "Nátelník / Zips tričko", "images": ["underarmour1.jpg", "underarmour2.jpg"] },
-        { "brand": "Denim Tears", "category": "Mikina", "images": ["denim1_2.jpg", "denim2_2.jpg"] },
-        { "brand": "Nike x Supreme", "category": "Tenisky (Air Force 1 Low)", "images": ["airforce1_2.jpg"] },
-        { "brand": "Nike", "category": "Tenisky (Air Max 95)", "images": ["airmax1_2.jpg", "airmax2_2.jpg"] }
+        { "brand": "Gianni Kavanagh", "category": "Rifle / Džínsy", "images": ["gianni1.jpeg", "gianni2.jpeg", "gianni3.jpeg"] },
+        { "brand": "Ninetytwo", "category": "Teplákové kraťasy", "images": ["GreyShort1.jpeg"] },
+        { "brand": "Lacoste", "category": "Mikina s kapucňou", "images": ["lacoste1.jpeg"] },
+        { "brand": "Louis Vuitton", "category": "Opasok", "images": ["luis1.jpeg", "luis2.jpeg"] },
+        { "brand": "Moncler", "category": "Polo tričko", "images": ["moncler1.jpeg", "moncler2.jpeg"] },
+        { "brand": "Moncler", "category": "Vesta", "images": ["monclervesta1.jpeg"] },
+        { "brand": "Nike / FC Barcelona", "category": "Tepláky", "images": ["nike1.jpeg", "nike2.jpeg"] },
+        { "brand": "Supply & Demand", "category": "Teplákové kraťasy", "images": ["supplykratase1.jpeg", "supplykratase2.jpeg"] },
+        { "brand": "Supply & Demand", "category": "Rifle / Džínsy", "images": ["supplyrifle1.jpeg", "supplyrifle2.jpeg"] },
+        { "brand": "Under Armour", "category": "Nátelník / Zips tričko", "images": ["underarmour1.jpeg", "underarmour2.jpeg"] },
+        { "brand": "Denim Tears", "category": "Mikina", "images": ["denim1.jpeg", "denim2.jpeg"] },
+        { "brand": "Nike x Supreme", "category": "Tenisky (Air Force 1 Low)", "images": ["airforce1.jpeg"] },
+        { "brand": "Nike", "category": "Tenisky (Air Max 95)", "images": ["airmax1.jpeg", "airmax2.jpeg"] }
       ]
     };
 
@@ -44,7 +44,7 @@
       card.className = 'card';
       const imgSrc = item.images[0] || 'https://via.placeholder.com/200';
       card.innerHTML = `
-        <img src="${imgSrc}" alt="${item.brand}">
+        <img src="${imgSrc}" alt="${item.brand}" onerror="this.src='https://via.placeholder.com/200?text=Obrázok+nenájdený'">
         <div class="brand">${item.brand}</div>
         <div class="category">${item.category}</div>
       `;
