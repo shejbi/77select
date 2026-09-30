@@ -145,7 +145,7 @@
       font-size: 11px;
       font-weight: 700;
       color: #666;
-      margin-top: 6px;
+      margin-top: 8px;
       display: flex;
       align-items: center;
       gap: 5px;
@@ -372,21 +372,30 @@
     const modalMainImg = document.getElementById("modalMainImg");
     const modalThumbs = document.getElementById("modalThumbs");
 
-    // Funkcia na započítanie a zobrazenie pozretí cez CountAPI
+    // Spoľahlivé počítadlo zobrazení
     async function trackViews(productId) {
-      const namespace = "77select_shop";
-      const key = `product_${productId}`;
+      const counterEl = document.getElementById("modalViews");
+      const storageKey = `views_77select_prod_${productId}`;
       
+      // Načítanie z lokálneho pamäťového registra
+      let localViews = parseInt(localStorage.getItem(storageKey) || "0") + 1;
+      localStorage.setItem(storageKey, localViews);
+
       try {
-        const res = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
-        const data = await res.json();
-        
-        const counterEl = document.getElementById("modalViews");
-        if (counterEl) {
-          counterEl.innerHTML = `👁️ Pozreté <strong>${data.value}x</strong>`;
+        // Skúsime načítať zo stabilného CounterAPI servera
+        const res = await fetch(`https://api.counterapi.dev/v1/77select_shop/prod_${productId}/up`);
+        if (res.ok) {
+          const data = await res.json();
+          if (counterEl) counterEl.innerHTML = `👁️ Pozreté <strong>${data.count}x</strong>`;
+          return;
         }
       } catch (err) {
-        console.log("Počítadlo nie je dostupné");
+        console.log("Online API nedostupné, používa sa lokálne počítadlo.");
+      }
+
+      // Záložné zobrazenie v prípade výpadku externého servera
+      if (counterEl) {
+        counterEl.innerHTML = `👁️ Pozreté <strong>${localViews}x</strong>`;
       }
     }
 
@@ -427,7 +436,7 @@
       modal.classList.add("open");
       document.querySelector("#overlay").classList.add("show");
 
-      // Spustenie započítania a načítania pozretí
+      // Spustenie počítadla
       trackViews(p.id);
     }
 
