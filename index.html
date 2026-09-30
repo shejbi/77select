@@ -297,6 +297,7 @@
     const INSTAGRAM_PROFILE = "77se.lect";
 
     const products = [
+      { id: 17, brand: "Apple", name: "AirPods (s nabíjacím puzdrom)", category: "Doplnky / Elektronika", price: 30.00, oldPrice: null, type: "second-hand", size: "UNI", condition: "8/10", sold: false, note: "", images: ["airpods1.jpeg", "airpods2.jpeg", "airpods3.jpeg"] },
       { id: 16, brand: "Louis Vuitton", name: "Damier Graphite Wallet", category: "Doplnky / Peňaženka", price: 10.00, oldPrice: 15.00, type: "second-hand", size: "UNI", condition: "9/10", sold: false, note: "", images: ["louisvuittonpenazenka.jpeg", "louisvuittonpenazenka.jpg"] },
       { id: 13, brand: "Prada", name: "Black Crossbody Bag", category: "Doplnky / Taška", price: 25.00, oldPrice: null, type: "new", size: "UNI", condition: "10/10 (Nové)", sold: false, note: "", images: ["prada1.jpeg", "prada2.jpeg"] },
       { id: 14, brand: "Essentials", name: "Fear of God Sweat Shorts", category: "Teplákové kraťasy", price: 30.00, oldPrice: null, type: "second-hand", size: "M/L", condition: "9/10", sold: false, note: "Na fotkách pôsobia mierne do hneda v dôsledku fotoaparátu/osvetlenia.", images: ["essentials1.jpeg", "essentials2.jpeg", "essentials3.jpeg"] },
@@ -391,19 +392,16 @@
     const modalMainImg = document.getElementById("modalMainImg");
     const modalThumbs = document.getElementById("modalThumbs");
 
-    // Započítanie a aktualizácia počtu zobrazení
     function trackViews(productId) {
       const storageKey = `views_77select_prod_${productId}`;
       let views = parseInt(localStorage.getItem(storageKey) || "12") + 1;
       localStorage.setItem(storageKey, views);
 
-      // Aktualizuje text v modale
       const counterEl = document.getElementById("modalViews");
       if (counterEl) {
         counterEl.innerHTML = `👁️ Pozreté <strong>${views}x</strong> (Práve si to pozerá viac ľudí)`;
       }
 
-      // Aktualizuje text priamo na karte produktu pod cenou
       const cardEl = document.getElementById(`card-view-${productId}`);
       if (cardEl) {
         cardEl.innerHTML = `👁️ ${views}x zobrazené`;
@@ -447,7 +445,6 @@
       modal.classList.add("open");
       document.querySelector("#overlay").classList.add("show");
 
-      // Spustenie započítania
       trackViews(p.id);
     }
 
