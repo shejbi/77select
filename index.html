@@ -3,146 +3,318 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>77SELECT</title>
+  <title>77SELECT — New & Second Hand</title>
+  <meta name="description" content="77SELECT — curated new & second-hand clothing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    body { 
-      font-family: 'Helvetica Neue', Arial, sans-serif; 
-      background: #0d0d0d; 
-      color: #ffffff; 
-      padding: 0; 
-      margin: 0; 
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f2;
+      --line: #d7d7d2;
+      --muted: #777;
+      --pad: clamp(18px, 4vw, 56px);
     }
-    
-    header { 
-      text-align: center; 
-      padding: 50px 20px 30px; 
-      background: #000000;
-      border-bottom: 1px solid #222;
-    }
-    
-    header h1 { 
-      font-size: 4rem; 
-      font-weight: 900; 
-      letter-spacing: 2px; 
-      margin: 0; 
-      color: #fff; 
-    }
-    
-    header p { 
-      font-size: 1.1rem; 
-      color: #888; 
-      letter-spacing: 4px; 
-      text-transform: uppercase; 
-      margin-top: 10px; 
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--white); color: var(--black); font-family: Inter, Arial, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
 
-    .grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
-      gap: 25px; 
-    }
-    
-    .card { 
-      background: #161616; 
-      border: 1px solid #262626; 
-      border-radius: 16px; 
-      padding: 16px; 
-      text-align: center; 
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
+    /* Header */
+    .header { height: 76px; padding: 0 var(--pad); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--black); position: sticky; top: 0; background: rgba(245,245,242,.94); backdrop-filter: blur(12px); z-index: 20; }
+    .logo { font-size: 22px; font-weight: 900; letter-spacing: -1.5px; }
+    .logo span { font-weight: 500; margin-left: 3px; }
+    .nav { display: flex; gap: 32px; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+    .nav a:hover, .footer-links a:hover { text-decoration: underline; }
+    .ig-btn { background: var(--black); color: white; border: 0; padding: 10px 16px; font-size: 10px; font-weight: 800; letter-spacing: 1px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
 
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: #444;
-    }
+    /* Hero */
+    .hero { min-height: calc(100vh - 76px); display: grid; grid-template-columns: 1.2fr .8fr; border-bottom: 1px solid var(--black); overflow: hidden; }
+    .hero-copy { padding: clamp(40px,7vw,100px) var(--pad); display: flex; flex-direction: column; justify-content: center; }
+    .eyebrow { font-size: 10px; font-weight: 800; letter-spacing: 2px; margin: 0 0 20px; }
+    .hero h1 { font-size: clamp(62px,11vw,170px); line-height: .82; letter-spacing: -.075em; margin: 0; font-weight: 900; }
+    .hero h1 span, .manifesto h2 span { font-weight: 400; }
+    .hero-text { max-width: 420px; font-size: 14px; line-height: 1.6; margin: 35px 0; }
+    .hero-art { background: var(--black); color: var(--white); display: grid; place-items: center; position: relative; }
+    .circle { width: min(32vw,380px); height: min(32vw,380px); border: 1px solid #555; border-radius: 50%; display: grid; place-items: center; font-size: clamp(90px,14vw,190px); font-weight: 900; letter-spacing: -.08em; }
+    .vertical { position: absolute; right: 25px; top: 50%; writing-mode: vertical-rl; transform: translateY(-50%); font-size: 9px; letter-spacing: 3px; }
+    .button { border: 1px solid var(--black); padding: 15px 20px; display: inline-flex; align-items: center; justify-content: space-between; gap: 35px; cursor: pointer; font-size: 10px; font-weight: 800; letter-spacing: 1.5px; width: max-content; }
+    .button-light { background: var(--white); }
+    .button-dark { background: var(--black); color: var(--white); }
 
-    .card img { 
-      width: 100%; 
-      height: 280px; 
-      object-fit: cover; 
-      border-radius: 10px; 
-      margin-bottom: 15px; 
-      background: #222;
-    }
+    /* Ticker */
+    .ticker { background: var(--black); color: white; overflow: hidden; white-space: nowrap; padding: 13px 0; font-size: 11px; font-weight: 800; letter-spacing: 2px; }
+    .ticker div { width: max-content; animation: move 20s linear infinite; }
+    @keyframes move { to { transform: translateX(-50%); } }
 
-    .brand { 
-      font-size: 1.2rem; 
-      font-weight: 700; 
-      color: #fff; 
-      margin-bottom: 5px;
-    }
+    /* Shop Grid */
+    .section { padding: 80px var(--pad); }
+    .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 45px; }
+    .section-head h2, .newsletter h2 { font-size: clamp(44px,7vw,92px); letter-spacing: -.06em; margin: 0; line-height: .9; }
+    .filters { display: flex; gap: 8px; }
+    .filter { border: 1px solid var(--black); background: transparent; padding: 10px 13px; font-size: 9px; font-weight: 800; letter-spacing: 1px; cursor: pointer; }
+    .filter.active, .filter:hover { background: var(--black); color: white; }
 
-    .category { 
-      font-size: 0.85rem; 
-      color: #aaa; 
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--black); border: 1px solid var(--black); }
+    .product { background: var(--white); position: relative; cursor: pointer; }
+    .product-image { aspect-ratio: 4/5; background: #eee; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+    .product:hover .product-image img { transform: scale(1.03); }
+    .tag { position: absolute; left: 12px; top: 12px; background: var(--black); color: white; padding: 6px 8px; font-size: 8px; font-weight: 800; letter-spacing: 1px; z-index: 2; }
+    .product-info { padding: 16px; }
+    .product-row { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+    .product-name { font-size: 14px; font-weight: 800; }
+    .price { font-size: 14px; font-weight: 800; }
+    .meta-line { color: var(--muted); font-size: 11px; margin-top: 6px; font-weight: 600; }
+    .buy-btn { width: 100%; margin-top: 14px; padding: 11px; border: 1px solid var(--black); background: transparent; font-size: 9px; font-weight: 800; letter-spacing: 1px; cursor: pointer; text-align: center; display: block; }
+    .buy-btn:hover { background: var(--black); color: white; }
+
+    /* Manifesto & Newsletter & Footer */
+    .manifesto { background: var(--black); color: var(--white); min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
+    .manifesto h2 { font-size: clamp(48px,9vw,125px); letter-spacing: -.07em; line-height: .86; margin: 0 0 40px; }
+    .manifesto p:last-child { max-width: 580px; color: #bbb; line-height: 1.7; font-size: 14px; }
+    .newsletter { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
+    .newsletter form { display: flex; border-bottom: 1px solid var(--black); min-width: min(480px,100%); }
+    .newsletter input { border: 0; background: transparent; outline: 0; padding: 14px 0; flex: 1; font-size: 12px; }
+    .newsletter .button { border: 0; padding-right: 0; }
+    .footer { border-top: 1px solid var(--black); padding: 25px var(--pad); display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 9px; font-weight: 700; letter-spacing: 1px; }
+    .footer-links { display: flex; gap: 20px; }
+
+    /* Modal pre detail produktu (Fotky & Info) */
+    .modal { position: fixed; inset: 0; z-index: 60; display: none; place-items: center; padding: 20px; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); }
+    .modal.open { display: grid; }
+    .modal-content { background: var(--white); border: 1px solid var(--black); max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; position: relative; }
+    .modal-close { position: absolute; right: 15px; top: 15px; background: var(--black); color: white; border: 0; width: 36px; height: 36px; font-size: 20px; cursor: pointer; z-index: 10; border-radius: 50%; display: grid; place-items: center; }
+    .modal-gallery { padding: 20px; background: #eee; display: flex; flex-direction: column; gap: 15px; }
+    .modal-main-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border: 1px solid var(--black); }
+    .modal-thumbs { display: flex; gap: 10px; overflow-x: auto; }
+    .modal-thumb { width: 60px; height: 75px; object-fit: cover; border: 1px solid #ccc; cursor: pointer; opacity: 0.6; }
+    .modal-thumb.active, .modal-thumb:hover { opacity: 1; border-color: var(--black); }
+    .modal-info { padding: 35px 25px; display: flex; flex-direction: column; justify-content: center; }
+    .modal-tag { display: inline-block; background: var(--black); color: white; padding: 4px 8px; font-size: 9px; font-weight: 800; letter-spacing: 1px; width: max-content; margin-bottom: 12px; }
+    .modal-title { font-size: 24px; font-weight: 900; margin: 0 0 10px; }
+    .modal-price { font-size: 22px; font-weight: 800; margin-bottom: 20px; }
+    .modal-details { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 15px 0; margin-bottom: 25px; font-size: 13px; line-height: 1.8; color: #333; }
+
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 40; opacity: 0; pointer-events: none; transition: .3s; }
+    .overlay.show { opacity: 1; pointer-events: auto; }
+
+    @media(max-width:760px){
+      .nav { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-art { min-height: 45vh; }
+      .circle { width: 230px; height: 230px; }
+      .section { padding: 60px 18px; }
+      .section-head { display: block; }
+      .filters { margin-top: 25px; overflow-x: auto; }
+      .products { grid-template-columns: repeat(1, 1fr); }
+      .newsletter { display: block; }
+      .newsletter form { min-width: 0; margin-top: 35px; }
+      .footer { display: block; }
+      .footer p { margin: 20px 0; }
+      .hero h1 { font-size: 18vw; }
+      .modal-content { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>77</h1>
-    <p>WEAR WHAT U SELECT</p>
+  <header class="header">
+    <a class="logo" href="#home">77<span>SELECT</span></a>
+    <nav class="nav">
+      <a href="#shop">SHOP</a>
+      <a href="#new">NEW</a>
+      <a href="#second-hand">SECOND HAND</a>
+      <a href="#about">ABOUT</a>
+    </nav>
+    <!-- Nastav si sem svoj vlastný username z Instagramu -->
+    <a href="https://instagram.com/77select" target="_blank" class="ig-btn">INSTAGRAM ↗</a>
   </header>
 
-  <div class="container">
-    <div class="grid" id="products"></div>
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow">77SELECT / CURATED CLOTHING</p>
+        <h1>WEAR<br><span>WHAT</span><br>YOU SELECT.</h1>
+        <p class="hero-text">Nové kúsky. Second hand. Vybrané bez zbytočností.</p>
+        <a class="button button-light" href="#shop">SHOP NOW <span>↗</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="circle">77</div>
+        <div class="vertical">SELECTED / NOT RANDOM</div>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="77SELECT">
+      <div>77SELECT ★ NEW ★ SECOND HAND ★ 77SELECT ★ NEW ★ SECOND HAND ★ 77SELECT ★ NEW ★ SECOND HAND ★</div>
+    </section>
+
+    <section class="shop section" id="shop">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">THE DROP</p>
+          <h2>SHOP</h2>
+        </div>
+        <div class="filters">
+          <button class="filter active" data-filter="all">ALL</button>
+          <button class="filter" data-filter="new">NEW</button>
+          <button class="filter" data-filter="second-hand">SECOND HAND</button>
+        </div>
+      </div>
+      <div class="products" id="products"></div>
+    </section>
+
+    <section class="manifesto section" id="about">
+      <p class="eyebrow">WHY 77SELECT</p>
+      <h2>LESS NOISE.<br><span>MORE STYLE.</span></h2>
+      <p>77SELECT je miesto pre kúsky, ktoré si vyberieš preto, že ich chceš nosiť — nie preto, že ich má každý.</p>
+    </section>
+
+    <section class="newsletter section">
+      <div>
+        <p class="eyebrow">STAY SELECTED</p>
+        <h2>GET THE DROP.</h2>
+      </div>
+      <form id="newsletterForm">
+        <input type="email" placeholder="tvoj@email.sk" required>
+        <button class="button button-dark" type="submit">JOIN <span>↗</span></button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="logo">77<span>SELECT</span></div>
+    <p>© 2026 77SELECT. ALL RIGHTS RESERVED.</p>
+    <div class="footer-links">
+      <a href="https://instagram.com/77select" target="_blank">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">Kontakt</a>
+    </div>
+  </footer>
+
+  <!-- Modal Detail Produktu (Fotky & Info) -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal">×</button>
+      <div class="modal-gallery">
+        <img src="" id="modalMainImg" class="modal-main-img" alt="">
+        <div class="modal-thumbs" id="modalThumbs"></div>
+      </div>
+      <div class="modal-info">
+        <span class="modal-tag" id="modalTag">NEW</span>
+        <h2 class="modal-title" id="modalTitle">Názov</h2>
+        <div class="modal-price" id="modalPrice">0,00 €</div>
+        <div class="modal-details" id="modalDetails"></div>
+        <a id="modalBuyIg" href="#" target="_blank" class="button button-dark full">KÚPIŤ CEZ INSTAGRAM ↗</a>
+      </div>
+    </div>
   </div>
 
+  <div class="overlay" id="overlay"></div>
+
   <script>
-    const data = {
-      "items": [
-        { "brand": "Gianni Kavanagh", "category": "Rifle / Džínsy", "images": ["gianni1.jpeg", "gianni1.jpg"] },
-        { "brand": "Ninetytwo", "category": "Teplákové kraťasy", "images": ["GreyShort1.jpeg", "GreyShort1.jpg", "greyshort1.jpeg"] },
-        { "brand": "Lacoste", "category": "Mikina s kapucňou", "images": ["lacoste1.jpeg", "lacoste1.jpg"] },
-        { "brand": "Louis Vuitton", "category": "Opasok", "images": ["Luis1.jpeg", "luis1.jpeg", "luis1.jpg"] },
-        { "brand": "Moncler", "category": "Polo tričko", "images": ["moncler1.jpeg", "moncler1.jpg"] },
-        { "brand": "Moncler", "category": "Vesta", "images": ["monclervesta1.jpeg", "monclervesta1.jpg"] },
-        { "brand": "Nike / FC Barcelona", "category": "Tepláky", "images": ["nike1.jpeg", "nike1.jpg"] },
-        { "brand": "Supply & Demand", "category": "Teplákové kraťasy", "images": ["supplykratase1.jpeg", "supplykratase1.jpg"] },
-        { "brand": "Supply & Demand", "category": "Rifle / Džínsy", "images": ["supplyrifle1.jpeg", "supplyrifle1.jpg"] },
-        { "brand": "Under Armour", "category": "Nátelník / Zips tričko", "images": ["underarmour1.jpeg", "underarmour1.jpg"] },
-        { "brand": "Denim Tears", "category": "Mikina", "images": ["denim1.jpeg", "denim1.jpg"] },
-        { "brand": "Nike x Supreme", "category": "Tenisky (Air Force 1 Low)", "images": ["airforce1.jpeg", "airforce1.jpg"] },
-        { "brand": "Nike", "category": "Tenisky (Air Max 95)", "images": ["airmax1.jpeg", "airmax1.jpg"] }
-      ]
-    };
+    // Nastav si sem svoj presný Instagram profil
+    const INSTAGRAM_PROFILE = "77select";
 
-    const container = document.getElementById('products');
-    data.items.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      
-      const img = document.createElement('img');
-      let imgIndex = 0;
-      img.src = item.images[imgIndex];
-      img.alt = item.brand;
-      
-      img.onerror = function() {
-        imgIndex++;
-        if (imgIndex < item.images.length) {
-          this.src = item.images[imgIndex];
-        } else {
-          this.src = 'https://via.placeholder.com/300x300/222/fff?text=Obrázok+nenájdený';
-        }
-      };
+    const products = [
+      { id: 1, brand: "Gianni Kavanagh", name: "Blue Denim Jeans", category: "Rifle / Džínsy", price: 49.90, type: "second-hand", size: "M / W31", condition: "9/10", images: ["gianni1.jpeg", "gianni2.jpeg", "gianni3.jpeg"] },
+      { id: 2, brand: "Ninetytwo", name: "Grey Sweat Shorts", category: "Teplákové kraťasy", price: 29.90, type: "second-hand", size: "M", condition: "9.5/10", images: ["GreyShort1.jpeg"] },
+      { id: 3, brand: "Lacoste", name: "White Logo Hoodie", category: "Mikina s kapucňou", price: 69.90, type: "second-hand", size: "L", condition: "9/10", images: ["lacoste1.jpeg"] },
+      { id: 4, brand: "Louis Vuitton", name: "Rainbow Hologram Belt", category: "Doplnky / Opasok", price: 180.00, type: "second-hand", size: "95 cm", condition: "8.5/10", images: ["Luis1.jpeg", "luis1.jpeg"] },
+      { id: 5, brand: "Moncler", name: "Navy Blue Polo Shirt", category: "Polo tričko", price: 89.90, type: "second-hand", size: "M", condition: "9/10", images: ["moncler1.jpeg", "moncler2.jpeg"] },
+      { id: 6, brand: "Moncler", name: "Black Puffer Vest", category: "Vesta", price: 199.90, type: "second-hand", size: "L", condition: "9.5/10", images: ["monclervesta1.jpeg"] },
+      { id: 7, brand: "Nike / FC Barcelona", name: "Black Track Pants", category: "Tepláky", price: 39.90, type: "second-hand", size: "M", condition: "9/10", images: ["nike1.jpeg", "nike2.jpeg"] },
+      { id: 8, brand: "Supply & Demand", name: "Black Sweat Shorts", category: "Teplákové kraťasy", price: 24.90, type: "second-hand", size: "S / M", condition: "9/10", images: ["supplykratase1.jpeg", "supplykratase2.jpeg"] },
+      { id: 9, brand: "Supply & Demand", name: "Dark Grey Jeans", category: "Rifle / Džínsy", price: 34.90, type: "second-hand", size: "M / W32", condition: "9/10", images: ["supplyrifle1.jpeg", "supplyrifle2.jpeg"] },
+      { id: 10, brand: "Under Armour", name: "Light Grey Half-Zip Longsleeve", category: "Nátelník na zips", price: 29.90, type: "second-hand", size: "M", condition: "9.5/10", images: ["underarmour1.jpeg", "underarmour2.jpeg"] },
+      { id: 11, brand: "Denim Tears", name: "Cotton Wreath Grey Hoodie", category: "Mikina s kapucňou", price: 149.90, type: "new", size: "M", condition: "10/10 (Nové)", images: ["denim1.jpeg", "denim2.jpeg"] },
+      { id: 12, brand: "Nike x Supreme", name: "Air Force 1 Low Black", category: "Tenisky", price: 139.90, type: "new", size: "EU 42.5", condition: "10/10 (Nové)", images: ["airforce1.jpeg"] },
+      { id: 13, brand: "Nike", name: "Air Max 95 Dark Grey", category: "Tenisky", price: 89.90, type: "second-hand", size: "EU 43", condition: "8.5/10", images: ["airmax1.jpeg", "airmax2.jpeg"] }
+    ];
 
-      card.appendChild(img);
-      card.innerHTML += `
-        <div class="brand">${item.brand}</div>
-        <div class="category">${item.category}</div>
+    const productsEl = document.querySelector("#products");
+
+    function renderProducts(filter = "all") {
+      const list = filter === "all" ? products : products.filter(p => p.type === filter);
+      productsEl.innerHTML = list.map(p => {
+        const primaryImg = p.images[0] || 'https://via.placeholder.com/400';
+        const igUrl = `https://instagram.com/${INSTAGRAM_PROFILE}`;
+        return `
+          <article class="product" onclick="openModal(${p.id})">
+            <div class="product-image">
+              <span class="tag">${p.type === "new" ? "NEW" : "SECOND HAND"}</span>
+              <img src="${primaryImg}" alt="${p.brand} ${p.name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500/eee/333?text=${encodeURIComponent(p.brand)}';">
+            </div>
+            <div class="product-info">
+              <div class="product-row">
+                <span class="product-name">${p.brand}</span>
+                <span class="price">${p.price.toFixed(2).replace(".", ",")} €</span>
+              </div>
+              <div class="meta-line">${p.name}</div>
+              <div class="meta-line">Veľkosť: ${p.size} • Stav: ${p.condition}</div>
+              <a href="${igUrl}" target="_blank" class="buy-btn" onclick="event.stopPropagation();">KÚPIŤ CEZ INSTAGRAM ↗</a>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    // Modal
+    const modal = document.getElementById("productModal");
+    const modalMainImg = document.getElementById("modalMainImg");
+    const modalThumbs = document.getElementById("modalThumbs");
+
+    function openModal(id) {
+      const p = products.find(x => x.id === id);
+      if (!p) return;
+
+      document.getElementById("modalTag").textContent = p.type === "new" ? "NEW" : "SECOND HAND";
+      document.getElementById("modalTitle").textContent = `${p.brand} — ${p.name}`;
+      document.getElementById("modalPrice").textContent = `${p.price.toFixed(2).replace(".", ",")} €`;
+      document.getElementById("modalDetails").innerHTML = `
+        <strong>Kategória:</strong> ${p.category}<br>
+        <strong>Veľkosť:</strong> ${p.size}<br>
+        <strong>Stav:</strong> ${p.condition}<br>
+        <strong>Dostupnosť:</strong> Skladom (1 ks)
       `;
-      container.appendChild(card);
-    });
-  </script>
 
+      document.getElementById("modalBuyIg").href = `https://instagram.com/${INSTAGRAM_PROFILE}`;
+
+      modalMainImg.src = p.images[0];
+      modalThumbs.innerHTML = p.images.map((img, idx) => `
+        <img src="${img}" class="modal-thumb ${idx === 0 ? 'active' : ''}" onclick="setModalImage('${img}', this)" alt="">
+      `).join("");
+
+      modal.classList.add("open");
+      document.querySelector("#overlay").classList.add("show");
+    }
+
+    function setModalImage(src, el) {
+      modalMainImg.src = src;
+      document.querySelectorAll(".modal-thumb").forEach(t => t.classList.remove("active"));
+      el.classList.add("active");
+    }
+
+    function closeModal() {
+      modal.classList.remove("open");
+      document.querySelector("#overlay").classList.remove("show");
+    }
+
+    document.getElementById("closeModal").onclick = closeModal;
+    document.querySelector("#overlay").onclick = closeModal;
+
+    // Filtre
+    document.querySelectorAll(".filter").forEach(b => b.onclick = () => {
+      document.querySelectorAll(".filter").forEach(x => x.classList.remove("active"));
+      b.classList.add("active");
+      renderProducts(b.dataset.filter);
+    });
+
+    document.querySelector("#newsletterForm").onsubmit = e => { e.preventDefault(); alert("Ďakujeme!"); e.target.reset(); };
+
+    renderProducts();
+  </script>
 </body>
 </html>
