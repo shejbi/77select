@@ -119,7 +119,7 @@
       .header { height: 60px; }
       .nav { display: flex; gap: 12px; font-size: 10px; }
       .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-art { display: none; } /* Na mobile skryjeme dekoratívny kruh pre viac miesta */
+      .hero-art { display: none; }
       .hero-copy { padding: 40px 18px; }
       .hero h1 { font-size: 15vw; }
       
@@ -128,7 +128,6 @@
       .filters { width: 100%; display: flex; gap: 6px; }
       .filter { flex: 1; text-align: center; padding: 10px 0; font-size: 9px; }
 
-      /* Grid 2 stĺpce na mobile pre super prehľadnosť */
       .products { grid-template-columns: repeat(2, 1fr); }
       .product-info { padding: 10px; }
       .product-name { font-size: 11px; }
@@ -242,7 +241,6 @@
   <script>
     const INSTAGRAM_PROFILE = "77se.lect";
 
-    // Tu vieš pri hociktorom produkte zmeniť sold: true (ak sa predá)
     const products = [
       { id: 1, brand: "Nike x Supreme", name: "Air Force 1 Low Black", category: "Tenisky", price: 50.00, type: "second-hand", size: "EU 45.5", condition: "8/10", sold: false, images: ["airforce1.jpeg"] },
       { id: 2, brand: "DSQUARED2", name: "Distressed Jeans", category: "Rifle / Džínsy", price: 50.00, type: "new", size: "M", condition: "10/10 (Nové)", sold: false, images: ["dsquared1.jpeg"] },
@@ -253,7 +251,7 @@
       { id: 7, brand: "Gianni Kavanagh", name: "Distressed Patch Jeans", category: "Rifle / Džínsy", price: 40.00, type: "new", size: "S", condition: "10/10 (Nové)", sold: false, images: ["gianni1.jpeg", "gianni2.jpeg", "gianni3.jpeg"] },
       { id: 8, brand: "Ninetytwo", name: "Grey Sweat Shorts", category: "Teplákové kraťasy", price: 30.00, type: "second-hand", size: "M", condition: "9/10", sold: false, images: ["GreyShort1.jpeg"] },
       { id: 9, brand: "Nike / FC Barcelona", name: "Training Pants", category: "Tepláky", price: 30.00, type: "new", size: "S", condition: "10/10 (Nové)", sold: false, images: ["nike1.jpeg", "nike2.jpeg"] },
-      { id: 10, brand: "Lacoste", name: "White Logo Hoodie", category: "Mikina s kapucňou", price: 30.00, type: "new", size: "M", condition: "10/10 (Nové)", sold: false, images: ["lacoste1.jpeg"] },
+      { id: 10, brand: "Lacoste", name: "White Logo Hoodie", category: "Mikina s kapucňou", price: 30.00, type: "new", size: "M", condition: "10/10 (Nové)", sold: true, images: ["lacoste1.jpeg"] },
       { id: 11, brand: "Denim Tears", name: "Cotton Wreath Grey Hoodie", category: "Mikina s kapucňou", price: 40.00, type: "new", size: "M", condition: "10/10 (Nové)", sold: false, images: ["denim1.jpeg", "denim2.jpeg"] },
       { id: 12, brand: "Moncler", name: "Puffer Vest", category: "Vesta", price: 30.00, type: "second-hand", size: "M", condition: "5/10", sold: false, images: ["monclervesta1.jpeg"] }
     ];
