@@ -1,69 +1,56 @@
-{
-  "items": [
-    {
-      "brand": "Gianni Kavanagh",
-      "category": "Rifle / Džínsy",
-      "images": ["gianni1.jpg", "gianni2.jpg", "gianni3.jpg"]
-    },
-    {
-      "brand": "Ninetytwo",
-      "category": "Teplákové kraťasy",
-      "images": ["GreyShort1.jpg"]
-    },
-    {
-      "brand": "Lacoste",
-      "category": "Mikina s kapucňou",
-      "images": ["lacoste1.jpg"]
-    },
-    {
-      "brand": "Louis Vuitton",
-      "category": "Opasok",
-      "images": ["luis1.jpg", "luis2.jpg"]
-    },
-    {
-      "brand": "Moncler",
-      "category": "Polo tričko",
-      "images": ["moncler1.jpg", "moncler2.jpg"]
-    },
-    {
-      "brand": "Moncler",
-      "category": "Vesta",
-      "images": ["monclervesta1.jpg"]
-    },
-    {
-      "brand": "Nike / FC Barcelona",
-      "category": "Tepláky",
-      "images": ["nike1.jpg", "nike2.jpg"]
-    },
-    {
-      "brand": "Supply & Demand",
-      "category": "Teplákové kraťasy",
-      "images": ["supplykratase1.jpg", "supplykratase2.jpg"]
-    },
-    {
-      "brand": "Supply & Demand",
-      "category": "Rifle / Džínsy",
-      "images": ["supplyrifle1.jpg", "supplyrifle2.jpg"]
-    },
-    {
-      "brand": "Under Armour",
-      "category": "Nátelník / Zips tričko",
-      "images": ["underarmour1.jpg", "underarmour2.jpg"]
-    },
-    {
-      "brand": "Denim Tears",
-      "category": "Mikina",
-      "images": ["denim1_2.jpg", "denim2_2.jpg"]
-    },
-    {
-      "brand": "Nike x Supreme",
-      "category": "Tenisky (Air Force 1 Low)",
-      "images": ["airforce1_2.jpg"]
-    },
-    {
-      "brand": "Nike",
-      "category": "Tenisky (Air Max 95)",
-      "images": ["airmax1_2.jpg", "airmax2_2.jpg"]
-    }
-  ]
-}
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Katalóg produktov</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; margin: 0; }
+    h1 { text-align: center; color: #333; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+    .card { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
+    .card img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+    .brand { font-size: 1.2em; font-weight: bold; color: #222; }
+    .category { font-size: 0.9em; color: #666; margin-top: 5px; }
+  </style>
+</head>
+<body>
+
+  <h1>Katalóg produktov</h1>
+  <div class="grid" id="products"></div>
+
+  <script>
+    const data = {
+      "items": [
+        { "brand": "Gianni Kavanagh", "category": "Rifle / Džínsy", "images": ["gianni1.jpg", "gianni2.jpg", "gianni3.jpg"] },
+        { "brand": "Ninetytwo", "category": "Teplákové kraťasy", "images": ["GreyShort1.jpg"] },
+        { "brand": "Lacoste", "category": "Mikina s kapucňou", "images": ["lacoste1.jpg"] },
+        { "brand": "Louis Vuitton", "category": "Opasok", "images": ["luis1.jpg", "luis2.jpg"] },
+        { "brand": "Moncler", "category": "Polo tričko", "images": ["moncler1.jpg", "moncler2.jpg"] },
+        { "brand": "Moncler", "category": "Vesta", "images": ["monclervesta1.jpg"] },
+        { "brand": "Nike / FC Barcelona", "category": "Tepláky", "images": ["nike1.jpg", "nike2.jpg"] },
+        { "brand": "Supply & Demand", "category": "Teplákové kraťasy", "images": ["supplykratase1.jpg", "supplykratase2.jpg"] },
+        { "brand": "Supply & Demand", "category": "Rifle / Džínsy", "images": ["supplyrifle1.jpg", "supplyrifle2.jpg"] },
+        { "brand": "Under Armour", "category": "Nátelník / Zips tričko", "images": ["underarmour1.jpg", "underarmour2.jpg"] },
+        { "brand": "Denim Tears", "category": "Mikina", "images": ["denim1_2.jpg", "denim2_2.jpg"] },
+        { "brand": "Nike x Supreme", "category": "Tenisky (Air Force 1 Low)", "images": ["airforce1_2.jpg"] },
+        { "brand": "Nike", "category": "Tenisky (Air Max 95)", "images": ["airmax1_2.jpg", "airmax2_2.jpg"] }
+      ]
+    };
+
+    const container = document.getElementById('products');
+    data.items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const imgSrc = item.images[0] || 'https://via.placeholder.com/200';
+      card.innerHTML = `
+        <img src="${imgSrc}" alt="${item.brand}">
+        <div class="brand">${item.brand}</div>
+        <div class="category">${item.category}</div>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>
