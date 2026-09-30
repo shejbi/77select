@@ -36,7 +36,7 @@
     .hero-copy { padding: clamp(30px,6vw,90px) var(--pad); display: flex; flex-direction: column; justify-content: center; }
     .eyebrow { font-size: 10px; font-weight: 800; letter-spacing: 2px; margin: 0 0 16px; color: var(--black); }
     .hero h1 { font-size: clamp(52px,10vw,160px); line-height: .84; letter-spacing: -.075em; margin: 0; font-weight: 900; }
-    .hero h1 span, .manifesto h2 span { font-weight: 400; }
+    .hero h1 span { font-weight: 400; }
     .hero-text { max-width: 420px; font-size: 14px; line-height: 1.5; margin: 25px 0 30px; color: #333; }
     .hero-art { background: var(--black); color: var(--white); display: grid; place-items: center; position: relative; }
     .circle { width: min(32vw,360px); height: min(32vw,360px); border: 1px solid #555; border-radius: 50%; display: grid; place-items: center; font-size: clamp(80px,13vw,180px); font-weight: 900; letter-spacing: -.08em; }
@@ -55,7 +55,7 @@
     /* Shop Grid */
     .section { padding: 60px var(--pad); }
     .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 35px; }
-    .section-head h2, .newsletter h2 { font-size: clamp(36px,6vw,84px); letter-spacing: -.06em; margin: 0; line-height: .9; }
+    .section-head h2 { font-size: clamp(36px,6vw,84px); letter-spacing: -.06em; margin: 0; line-height: .9; }
     
     .filters { display: flex; gap: 6px; }
     .filter { border: 1px solid var(--black); background: transparent; padding: 8px 12px; font-size: 9px; font-weight: 800; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; }
@@ -66,14 +66,41 @@
     
     .product-image { aspect-ratio: 4/5; background: #eaeaea; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
     .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-    .product:hover .product-image img { transform: scale(1.04); }
+    .product:not(.is-sold):hover .product-image img { transform: scale(1.04); }
     
-    /* Tagy & Sold stav */
     .tag { position: absolute; left: 10px; top: 10px; background: var(--black); color: white; padding: 5px 7px; font-size: 8px; font-weight: 800; letter-spacing: 1px; z-index: 2; }
-    .tag.sold-tag { background: #d32f2f; }
-    
-    .product.is-sold .product-image img { filter: grayscale(0.8); opacity: 0.6; }
-    .product.is-sold .buy-btn { background: #eee; color: #888; border-color: #ccc; pointer-events: none; }
+
+    /* STAV: PREDANÉ (SOLD OVERLAY) */
+    .sold-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+    }
+    .sold-badge {
+      background: #000;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      padding: 12px 28px;
+      border: 2px solid #fff;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .product.is-sold { cursor: not-allowed; }
+    .product.is-sold .product-image img { filter: grayscale(1); }
+    .product.is-sold .buy-btn { 
+      background: #e0e0e0; 
+      color: #888; 
+      border-color: #ccc; 
+      pointer-events: none; 
+      cursor: not-allowed; 
+    }
 
     .product-info { padding: 14px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
     .product-row { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
@@ -114,7 +141,7 @@
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 40; opacity: 0; pointer-events: none; transition: .3s; }
     .overlay.show { opacity: 1; pointer-events: auto; }
 
-    /* MOBILNÁ OPTIMALIZÁCIA (Mobile-First) */
+    /* MOBILNÁ OPTIMALIZÁCIA */
     @media(max-width: 768px) {
       .header { height: 60px; }
       .nav { display: flex; gap: 12px; font-size: 10px; }
@@ -134,6 +161,8 @@
       .price { font-size: 11px; }
       .meta-line { font-size: 9px; }
       .buy-btn { padding: 8px 4px; font-size: 8px; margin-top: 8px; }
+
+      .sold-badge { font-size: 16px; padding: 8px 16px; letter-spacing: 2px; }
 
       .newsletter { display: block; }
       .newsletter form { min-width: 0; margin-top: 25px; }
@@ -268,14 +297,18 @@
         const igUrl = `https://instagram.com/${INSTAGRAM_PROFILE}`;
         const isSold = p.sold;
         
-        const tagText = isSold ? "SOLD" : (p.type === "new" ? "NEW" : "SECOND HAND");
-        const tagClass = isSold ? "tag sold-tag" : "tag";
+        const tagText = p.type === "new" ? "NEW" : "SECOND HAND";
         const buyBtnText = isSold ? "PREDANÉ" : "KÚPIŤ CEZ IG ↗";
 
         return `
-          <article class="product ${isSold ? 'is-sold' : ''}" onclick="openModal(${p.id})">
+          <article class="product ${isSold ? 'is-sold' : ''}" onclick="${isSold ? '' : `openModal(${p.id})`}">
             <div class="product-image">
-              <span class="${tagClass}">${tagText}</span>
+              <span class="tag">${tagText}</span>
+              ${isSold ? `
+                <div class="sold-overlay">
+                  <span class="sold-badge">SOLD</span>
+                </div>
+              ` : ''}
               <img src="${primaryImg}" alt="${p.brand} ${p.name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500/eee/333?text=${encodeURIComponent(p.brand)}';">
             </div>
             <div class="product-info">
@@ -287,7 +320,7 @@
                 <div class="meta-line">${p.name}</div>
                 <div class="meta-line">Veľkosť: ${p.size}</div>
               </div>
-              <a href="${isSold ? '#' : igUrl}" target="_blank" class="buy-btn" onclick="${isSold ? 'event.preventDefault();' : 'event.stopPropagation();'}">${buyBtnText}</a>
+              <a href="${isSold ? 'javascript:void(0)' : igUrl}" target="${isSold ? '_self' : '_blank'}" class="buy-btn" onclick="event.stopPropagation();">${buyBtnText}</a>
             </div>
           </article>
         `;
@@ -312,12 +345,10 @@
 
     function openModal(id) {
       const p = products.find(x => x.id === id);
-      if (!p) return;
+      if (!p || p.sold) return;
 
-      const isSold = p.sold;
       const modalTag = document.getElementById("modalTag");
-      modalTag.textContent = isSold ? "SOLD" : (p.type === "new" ? "NEW" : "SECOND HAND");
-      modalTag.style.background = isSold ? "#d32f2f" : "#0a0a0a";
+      modalTag.textContent = p.type === "new" ? "NEW" : "SECOND HAND";
 
       document.getElementById("modalTitle").textContent = `${p.brand} — ${p.name}`;
       document.getElementById("modalPrice").textContent = `${p.price.toFixed(2).replace(".", ",")} €`;
@@ -325,21 +356,12 @@
         <strong>Kategória:</strong> ${p.category}<br>
         <strong>Veľkosť:</strong> ${p.size}<br>
         <strong>Stav:</strong> ${p.condition}<br>
-        <strong>Dostupnosť:</strong> ${isSold ? 'Predané' : 'Skladom (1 ks)'}
+        <strong>Dostupnosť:</strong> Skladom (1 ks)
       `;
 
       const buyBtn = document.getElementById("modalBuyIg");
-      if (isSold) {
-        buyBtn.textContent = "POLOŽKA JE PREDANÁ";
-        buyBtn.style.background = "#888";
-        buyBtn.style.pointerEvents = "none";
-        buyBtn.href = "#";
-      } else {
-        buyBtn.textContent = "KÚPIŤ CEZ INSTAGRAM ↗";
-        buyBtn.style.background = "#0a0a0a";
-        buyBtn.style.pointerEvents = "auto";
-        buyBtn.href = `https://instagram.com/${INSTAGRAM_PROFILE}`;
-      }
+      buyBtn.textContent = "KÚPIŤ CEZ INSTAGRAM ↗";
+      buyBtn.href = `https://instagram.com/${INSTAGRAM_PROFILE}`;
 
       modalMainImg.src = p.images[0];
       modalThumbs.innerHTML = p.images.map((img, idx) => `
