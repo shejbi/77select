@@ -3,38 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Katalóg produktov</title>
+  <title>77SELECT</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; margin: 0; }
-    h1 { text-align: center; color: #333; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
-    .card { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
-    .card img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
-    .brand { font-size: 1.2em; font-weight: bold; color: #222; }
-    .category { font-size: 0.9em; color: #666; margin-top: 5px; }
+    body { 
+      font-family: 'Helvetica Neue', Arial, sans-serif; 
+      background: #0d0d0d; 
+      color: #ffffff; 
+      padding: 0; 
+      margin: 0; 
+    }
+    
+    header { 
+      text-align: center; 
+      padding: 50px 20px 30px; 
+      background: #000000;
+      border-bottom: 1px solid #222;
+    }
+    
+    header h1 { 
+      font-size: 4rem; 
+      font-weight: 900; 
+      letter-spacing: 2px; 
+      margin: 0; 
+      color: #fff; 
+    }
+    
+    header p { 
+      font-size: 1.1rem; 
+      color: #888; 
+      letter-spacing: 4px; 
+      text-transform: uppercase; 
+      margin-top: 10px; 
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+      gap: 25px; 
+    }
+    
+    .card { 
+      background: #161616; 
+      border: 1px solid #262626; 
+      border-radius: 16px; 
+      padding: 16px; 
+      text-align: center; 
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #444;
+    }
+
+    .card img { 
+      width: 100%; 
+      height: 280px; 
+      object-fit: cover; 
+      border-radius: 10px; 
+      margin-bottom: 15px; 
+      background: #222;
+    }
+
+    .brand { 
+      font-size: 1.2rem; 
+      font-weight: 700; 
+      color: #fff; 
+      margin-bottom: 5px;
+    }
+
+    .category { 
+      font-size: 0.85rem; 
+      color: #aaa; 
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Katalóg produktov</h1>
-  <div class="grid" id="products"></div>
+  <header>
+    <h1>77</h1>
+    <p>WEAR WHAT U SELECT</p>
+  </header>
+
+  <div class="container">
+    <div class="grid" id="products"></div>
+  </div>
 
   <script>
     const data = {
       "items": [
-        { "brand": "Gianni Kavanagh", "category": "Rifle / Džínsy", "images": ["gianni1.jpeg", "gianni2.jpeg", "gianni3.jpeg"] },
-        { "brand": "Ninetytwo", "category": "Teplákové kraťasy", "images": ["GreyShort1.jpeg"] },
-        { "brand": "Lacoste", "category": "Mikina s kapucňou", "images": ["lacoste1.jpeg"] },
-        { "brand": "Louis Vuitton", "category": "Opasok", "images": ["luis1.jpeg", "luis2.jpeg"] },
-        { "brand": "Moncler", "category": "Polo tričko", "images": ["moncler1.jpeg", "moncler2.jpeg"] },
-        { "brand": "Moncler", "category": "Vesta", "images": ["monclervesta1.jpeg"] },
-        { "brand": "Nike / FC Barcelona", "category": "Tepláky", "images": ["nike1.jpeg", "nike2.jpeg"] },
-        { "brand": "Supply & Demand", "category": "Teplákové kraťasy", "images": ["supplykratase1.jpeg", "supplykratase2.jpeg"] },
-        { "brand": "Supply & Demand", "category": "Rifle / Džínsy", "images": ["supplyrifle1.jpeg", "supplyrifle2.jpeg"] },
-        { "brand": "Under Armour", "category": "Nátelník / Zips tričko", "images": ["underarmour1.jpeg", "underarmour2.jpeg"] },
-        { "brand": "Denim Tears", "category": "Mikina", "images": ["denim1.jpeg", "denim2.jpeg"] },
-        { "brand": "Nike x Supreme", "category": "Tenisky (Air Force 1 Low)", "images": ["airforce1.jpeg"] },
-        { "brand": "Nike", "category": "Tenisky (Air Max 95)", "images": ["airmax1.jpeg", "airmax2.jpeg"] }
+        { "brand": "Gianni Kavanagh", "category": "Rifle / Džínsy", "images": ["gianni1.jpeg", "gianni1.jpg"] },
+        { "brand": "Ninetytwo", "category": "Teplákové kraťasy", "images": ["GreyShort1.jpeg", "GreyShort1.jpg", "greyshort1.jpeg"] },
+        { "brand": "Lacoste", "category": "Mikina s kapucňou", "images": ["lacoste1.jpeg", "lacoste1.jpg"] },
+        { "brand": "Louis Vuitton", "category": "Opasok", "images": ["Luis1.jpeg", "luis1.jpeg", "luis1.jpg"] },
+        { "brand": "Moncler", "category": "Polo tričko", "images": ["moncler1.jpeg", "moncler1.jpg"] },
+        { "brand": "Moncler", "category": "Vesta", "images": ["monclervesta1.jpeg", "monclervesta1.jpg"] },
+        { "brand": "Nike / FC Barcelona", "category": "Tepláky", "images": ["nike1.jpeg", "nike1.jpg"] },
+        { "brand": "Supply & Demand", "category": "Teplákové kraťasy", "images": ["supplykratase1.jpeg", "supplykratase1.jpg"] },
+        { "brand": "Supply & Demand", "category": "Rifle / Džínsy", "images": ["supplyrifle1.jpeg", "supplyrifle1.jpg"] },
+        { "brand": "Under Armour", "category": "Nátelník / Zips tričko", "images": ["underarmour1.jpeg", "underarmour1.jpg"] },
+        { "brand": "Denim Tears", "category": "Mikina", "images": ["denim1.jpeg", "denim1.jpg"] },
+        { "brand": "Nike x Supreme", "category": "Tenisky (Air Force 1 Low)", "images": ["airforce1.jpeg", "airforce1.jpg"] },
+        { "brand": "Nike", "category": "Tenisky (Air Max 95)", "images": ["airmax1.jpeg", "airmax1.jpg"] }
       ]
     };
 
@@ -42,9 +120,23 @@
     data.items.forEach(item => {
       const card = document.createElement('div');
       card.className = 'card';
-      const imgSrc = item.images[0] || 'https://via.placeholder.com/200';
-      card.innerHTML = `
-        <img src="${imgSrc}" alt="${item.brand}" onerror="this.src='https://via.placeholder.com/200?text=Obrázok+nenájdený'">
+      
+      const img = document.createElement('img');
+      let imgIndex = 0;
+      img.src = item.images[imgIndex];
+      img.alt = item.brand;
+      
+      img.onerror = function() {
+        imgIndex++;
+        if (imgIndex < item.images.length) {
+          this.src = item.images[imgIndex];
+        } else {
+          this.src = 'https://via.placeholder.com/300x300/222/fff?text=Obrázok+nenájdený';
+        }
+      };
+
+      card.appendChild(img);
+      card.innerHTML += `
         <div class="brand">${item.brand}</div>
         <div class="category">${item.category}</div>
       `;
