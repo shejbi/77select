@@ -3,274 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>77SELECT — New & Second Hand</title>
-  <meta name="description" content="77SELECT — curated new & second-hand clothing.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>Resell Catalog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root {
-      --black: #0a0a0a;
-      --white: #f5f5f2;
-      --line: #d7d7d2;
-      --muted: #777;
-      --pad: clamp(16px, 4vw, 56px);
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { margin: 0; background: var(--white); color: var(--black); font-family: Inter, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
-    a { color: inherit; text-decoration: none; }
-    button, input { font: inherit; }
-
-    /* Header */
-    .header { height: 70px; padding: 0 var(--pad); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--black); position: sticky; top: 0; background: rgba(245,245,242,.95); backdrop-filter: blur(12px); z-index: 20; }
-    .logo { font-size: 20px; font-weight: 900; letter-spacing: -1.5px; }
-    .logo span { font-weight: 500; margin-left: 3px; }
-    .nav { display: flex; gap: 24px; font-size: 11px; font-weight: 800; letter-spacing: 1px; }
-    .nav a { cursor: pointer; transition: opacity 0.2s; }
-    .nav a:hover { opacity: 0.6; }
-    .ig-btn { background: var(--black); color: white; border: 0; padding: 9px 14px; font-size: 10px; font-weight: 800; letter-spacing: 1px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
-
-    /* Hero */
-    .hero { min-height: calc(100vh - 70px); display: grid; grid-template-columns: 1.2fr .8fr; border-bottom: 1px solid var(--black); overflow: hidden; }
-    .hero-copy { padding: clamp(30px,6vw,90px) var(--pad); display: flex; flex-direction: column; justify-content: center; }
-    .eyebrow { font-size: 10px; font-weight: 800; letter-spacing: 2px; margin: 0 0 16px; color: var(--black); }
-    .hero h1 { font-size: clamp(52px,10vw,160px); line-height: .84; letter-spacing: -.075em; margin: 0; font-weight: 900; }
-    .hero h1 span { font-weight: 400; }
-    .hero-text { max-width: 420px; font-size: 14px; line-height: 1.5; margin: 25px 0 30px; color: #333; }
-    .hero-art { background: var(--black); color: var(--white); display: grid; place-items: center; position: relative; }
-    .circle { width: min(32vw,360px); height: min(32vw,360px); border: 1px solid #555; border-radius: 50%; display: grid; place-items: center; font-size: clamp(80px,13vw,180px); font-weight: 900; letter-spacing: -.08em; }
-    .vertical { position: absolute; right: 25px; top: 50%; writing-mode: vertical-rl; transform: translateY(-50%); font-size: 9px; letter-spacing: 3px; }
-    
-    .hero-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-    .button { border: 1px solid var(--black); padding: 13px 18px; display: inline-flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer; font-size: 10px; font-weight: 800; letter-spacing: 1.5px; }
-    .button-light { background: var(--white); color: var(--black); }
-    .button-dark { background: var(--black); color: var(--white); }
-
-    /* Ticker */
-    .ticker { background: var(--black); color: white; overflow: hidden; white-space: nowrap; padding: 12px 0; font-size: 11px; font-weight: 800; letter-spacing: 2px; }
-    .ticker div { width: max-content; animation: move 20s linear infinite; }
-    @keyframes move { to { transform: translateX(-50%); } }
-
-    /* Shop Grid */
-    .section { padding: 60px var(--pad); }
-    .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 35px; }
-    .section-head h2 { font-size: clamp(36px,6vw,84px); letter-spacing: -.06em; margin: 0; line-height: .9; }
-    
-    .filters { display: flex; gap: 6px; }
-    .filter { border: 1px solid var(--black); background: transparent; padding: 8px 12px; font-size: 9px; font-weight: 800; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; }
-    .filter.active, .filter:hover { background: var(--black); color: white; }
-
-    .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--black); border: 1px solid var(--black); }
-    .product { background: var(--white); position: relative; cursor: pointer; display: flex; flex-direction: column; }
-    
-    .product-image { aspect-ratio: 4/5; background: #eaeaea; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-    .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-    .product:not(.is-sold):hover .product-image img { transform: scale(1.04); }
-    
-    .tag { position: absolute; left: 10px; top: 10px; background: var(--black); color: white; padding: 5px 7px; font-size: 8px; font-weight: 800; letter-spacing: 1px; z-index: 2; }
-
-    /* STAV: PREDANÉ (SOLD OVERLAY) */
-    .sold-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.55);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 3;
-    }
-    .sold-badge {
-      background: #000;
-      color: #fff;
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: 4px;
-      padding: 12px 28px;
-      border: 2px solid #fff;
-      text-transform: uppercase;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    }
-
-    .product.is-sold { cursor: not-allowed; }
-    .product.is-sold .product-image img { filter: grayscale(1); }
-    .product.is-sold .buy-btn { 
-      background: #e0e0e0; 
-      color: #888; 
-      border-color: #ccc; 
-      pointer-events: none; 
-      cursor: not-allowed; 
-    }
-
-    .product-info { padding: 14px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-    .product-row { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
-    .product-name { font-size: 13px; font-weight: 800; }
-    .price { font-size: 13px; font-weight: 800; white-space: nowrap; }
-    .meta-line { color: var(--muted); font-size: 10px; margin-top: 4px; font-weight: 600; line-height: 1.3; }
-    
-    .buy-btn { width: 100%; margin-top: 12px; padding: 10px; border: 1px solid var(--black); background: transparent; font-size: 9px; font-weight: 800; letter-spacing: 1px; cursor: pointer; text-align: center; display: block; transition: all 0.2s; }
-    .buy-btn:hover { background: var(--black); color: white; }
-
-    /* Manifesto & Newsletter & Footer */
-    .manifesto { background: var(--black); color: var(--white); min-height: 50vh; display: flex; flex-direction: column; justify-content: center; }
-    .manifesto h2 { font-size: clamp(40px,8vw,110px); letter-spacing: -.07em; line-height: .86; margin: 0 0 30px; }
-    .manifesto p:last-child { max-width: 580px; color: #bbb; line-height: 1.6; font-size: 13px; }
-    .newsletter { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; }
-    .newsletter form { display: flex; border-bottom: 1px solid var(--black); min-width: min(420px,100%); }
-    .newsletter input { border: 0; background: transparent; outline: 0; padding: 12px 0; flex: 1; font-size: 12px; }
-    .newsletter .button { border: 0; padding-right: 0; }
-    .footer { border-top: 1px solid var(--black); padding: 20px var(--pad); display: flex; justify-content: space-between; align-items: center; gap: 15px; font-size: 9px; font-weight: 700; letter-spacing: 1px; }
-    .footer-links { display: flex; gap: 16px; }
-
-    /* Modal pre detail produktu */
-    .modal { position: fixed; inset: 0; z-index: 60; display: none; place-items: center; padding: 15px; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); }
-    .modal.open { display: grid; }
-    .modal-content { background: var(--white); border: 1px solid var(--black); max-width: 850px; width: 100%; max-height: 90vh; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; position: relative; }
-    .modal-close { position: absolute; right: 12px; top: 12px; background: var(--black); color: white; border: 0; width: 32px; height: 32px; font-size: 18px; cursor: pointer; z-index: 10; border-radius: 50%; display: grid; place-items: center; }
-    .modal-gallery { padding: 15px; background: #eee; display: flex; flex-direction: column; gap: 10px; }
-    .modal-main-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border: 1px solid var(--black); }
-    .modal-thumbs { display: flex; gap: 8px; overflow-x: auto; }
-    .modal-thumb { width: 50px; height: 65px; object-fit: cover; border: 1px solid #ccc; cursor: pointer; opacity: 0.6; }
-    .modal-thumb.active, .modal-thumb:hover { opacity: 1; border-color: var(--black); }
-    .modal-info { padding: 25px 20px; display: flex; flex-direction: column; justify-content: center; }
-    .modal-tag { display: inline-block; background: var(--black); color: white; padding: 4px 8px; font-size: 8px; font-weight: 800; letter-spacing: 1px; width: max-content; margin-bottom: 10px; }
-    .modal-title { font-size: 20px; font-weight: 900; margin: 0 0 8px; }
-    .modal-price { font-size: 18px; font-weight: 800; margin-bottom: 15px; }
-    .modal-details { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0; margin-bottom: 20px; font-size: 12px; line-height: 1.7; color: #333; }
-
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 40; opacity: 0; pointer-events: none; transition: .3s; }
-    .overlay.show { opacity: 1; pointer-events: auto; }
-
-    /* MOBILNÁ OPTIMALIZÁCIA */
-    @media(max-width: 768px) {
-      .header { height: 60px; }
-      .nav { display: flex; gap: 12px; font-size: 10px; }
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-art { display: none; }
-      .hero-copy { padding: 40px 18px; }
-      .hero h1 { font-size: 15vw; }
-      
-      .section { padding: 40px 16px; }
-      .section-head { display: flex; flex-direction: column; align-items: flex-start; gap: 15px; margin-bottom: 25px; }
-      .filters { width: 100%; display: flex; gap: 6px; }
-      .filter { flex: 1; text-align: center; padding: 10px 0; font-size: 9px; }
-
-      .products { grid-template-columns: repeat(2, 1fr); }
-      .product-info { padding: 10px; }
-      .product-name { font-size: 11px; }
-      .price { font-size: 11px; }
-      .meta-line { font-size: 9px; }
-      .buy-btn { padding: 8px 4px; font-size: 8px; margin-top: 8px; }
-
-      .sold-badge { font-size: 16px; padding: 8px 16px; letter-spacing: 2px; }
-
-      .newsletter { display: block; }
-      .newsletter form { min-width: 0; margin-top: 25px; }
-      .footer { flex-direction: column; text-align: center; gap: 10px; }
-      .modal-content { grid-template-columns: 1fr; }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between">
 
-  <header class="header">
-    <a class="logo" href="#home">77<span>SELECT</span></a>
-    <nav class="nav">
-      <a onclick="applyFilter('all')">SHOP</a>
-      <a onclick="applyFilter('new')">NEW</a>
-      <a onclick="applyFilter('second-hand')">SECOND HAND</a>
-    </nav>
-    <a href="https://instagram.com/77se.lect" target="_blank" class="ig-btn">INSTAGRAM ↗</a>
+  <!-- Header -->
+  <header class="py-8 border-b border-slate-800 text-center glass-card sticky top-0 z-40">
+    <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+      RESELL CATALOG
+    </h1>
+    <p class="text-slate-400 mt-2 text-sm md:text-base">Exkluzívne kúsky za najlepšie ceny</p>
   </header>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-copy">
-        <p class="eyebrow">77SELECT / CURATED CLOTHING</p>
-        <h1>WEAR<br><span>WHAT</span><br>YOU SELECT.</h1>
-        <p class="hero-text">Nové kúsky. Second hand. Vybrané bez zbytočností.</p>
-        <div class="hero-buttons">
-          <button class="button button-dark" onclick="applyFilter('all')">VŠETKO <span>↗</span></button>
-          <button class="button button-light" onclick="applyFilter('second-hand')">SECOND HAND <span>↗</span></button>
-        </div>
+  <!-- Content -->
+  <main class="max-w-7xl mx-auto px-4 py-8 w-full flex-grow">
+    
+    <!-- Filters / Controls -->
+    <div class="flex flex-col md:flex-row gap-4 mb-8 justify-between items-center bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+      <input type="text" id="searchInput" placeholder="Hľadať produkt, značku..." class="w-full md:w-1/3 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-200 focus:outline-none focus:border-blue-500">
+      
+      <div class="flex flex-wrap gap-2 w-full md:w-auto">
+        <button onclick="filterType('all')" class="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white hover:bg-blue-500 transition">Všetko</button>
+        <button onclick="filterType('new')" class="px-4 py-2 rounded-lg text-sm font-semibold bg-slate-700 text-slate-200 hover:bg-slate-600 transition">Nové</button>
+        <button onclick="filterType('second-hand')" class="px-4 py-2 rounded-lg text-sm font-semibold bg-slate-700 text-slate-200 hover:bg-slate-600 transition">Second-Hand</button>
       </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="circle">77</div>
-        <div class="vertical">SELECTED / NOT RANDOM</div>
-      </div>
-    </section>
+    </div>
 
-    <section class="ticker" aria-label="77SELECT">
-      <div>77SELECT ★ NEW ★ SECOND HAND ★ 77SELECT ★ NEW ★ SECOND HAND ★ 77SELECT ★ NEW ★ SECOND HAND ★</div>
-    </section>
-
-    <section class="shop section" id="shop">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">THE DROP</p>
-          2026<h2>SHOP</h2>
-        </div>
-        <div class="filters">
-          <button class="filter active" data-filter="all" onclick="setFilterBtn('all')">ALL</button>
-          <button class="filter" data-filter="new" onclick="setFilterBtn('new')">NEW</button>
-          <button class="filter" data-filter="second-hand" onclick="setFilterBtn('second-hand')">SECOND HAND</button>
-        </div>
-      </div>
-      <div class="products" id="products"></div>
-    </section>
-
-    <section class="manifesto section" id="about">
-      <p class="eyebrow">WHY 77SELECT</p>
-      <h2>LESS NOISE.<br><span>MORE STYLE.</span></h2>
-      <p>77SELECT je miesto pre kúsky, ktoré si vyberieš preto, že ich chceš nosiť — nie preto, že ich má každý.</p>
-    </section>
-
-    <section class="newsletter section">
-      <div>
-        <p class="eyebrow">STAY SELECTED</p>
-        <h2>GET THE DROP.</h2>
-      </div>
-      <form id="newsletterForm">
-        <input type="email" placeholder="tvoj@email.sk" required>
-        <button class="button button-dark" type="submit">JOIN <span>↗</span></button>
-      </form>
-    </section>
+    <!-- Products Grid -->
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Generuje JS -->
+    </div>
   </main>
 
-  <footer class="footer">
-    <div class="logo">77<span>SELECT</span></div>
-    <p>© 2026 77SELECT. ALL RIGHTS RESERVED.</p>
-    <div class="footer-links">
-      <a href="https://instagram.com/77se.lect" target="_blank">Instagram</a>
-      <a href="#">TikTok</a>
-      <a href="#">Kontakt</a>
-    </div>
-  </footer>
-
-  <!-- Modal Detail Produktu -->
-  <div class="modal" id="productModal">
-    <div class="modal-content">
-      <button class="modal-close" id="closeModal">×</button>
-      <div class="modal-gallery">
-        <img src="" id="modalMainImg" class="modal-main-img" alt="">
-        <div class="modal-thumbs" id="modalThumbs"></div>
+  <!-- Modal na detail produktu / fotky -->
+  <div id="imageModal" class="fixed inset-0 bg-black/90 hidden z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="relative max-w-4xl w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden p-4 flex flex-col items-center">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl font-bold z-10">&times;</button>
+      
+      <div class="relative w-full flex items-center justify-center min-h-[300px] max-h-[70vh]">
+        <img id="modalImage" src="" alt="Detail" class="max-h-[70vh] object-contain rounded-lg">
+        <button id="prevBtn" onclick="changeImage(-1)" class="absolute left-2 bg-slate-800/80 hover:bg-slate-700 text-white p-3 rounded-full">&larr;</button>
+        <button id="nextBtn" onclick="changeImage(1)" class="absolute right-2 bg-slate-800/80 hover:bg-slate-700 text-white p-3 rounded-full">&rarr;</button>
       </div>
-      <div class="modal-info">
-        <span class="modal-tag" id="modalTag">NEW</span>
-        <h2 class="modal-title" id="modalTitle">Názov</h2>
-        <div class="modal-price" id="modalPrice">0,00 €</div>
-        <div class="modal-details" id="modalDetails"></div>
-        <a id="modalBuyIg" href="#" target="_blank" class="button button-dark full">KÚPIŤ CEZ INSTAGRAM ↗</a>
+
+      <div id="modalDetails" class="mt-4 text-center">
+        <h3 id="modalTitle" class="text-xl font-bold text-white"></h3>
+        <p id="modalPrice" class="text-emerald-400 font-semibold text-lg"></p>
+        <p id="modalNote" class="text-slate-400 text-sm mt-1"></p>
       </div>
     </div>
   </div>
 
-  <div class="overlay" id="overlay"></div>
+  <!-- Footer -->
+  <footer class="py-6 text-center text-slate-500 text-sm border-t border-slate-800">
+    &copy; Resell Catalog. Všetky práva vyhradené.
+  </footer>
 
   <script>
-    const INSTAGRAM_PROFILE = "77se.lect";
-
     const products = [
+      { id: 16, brand: "Louis Vuitton", name: "Damier Graphite Wallet", category: "Doplnky / Peňaženka", price: 35.00, type: "second-hand", size: "UNI", condition: "9/10", sold: false, note: "", images: ["louisvuittonpenazenka.jpg", "louisvuittonpenazenka.jpeg"] },
       { id: 13, brand: "Prada", name: "Black Crossbody Bag", category: "Doplnky / Taška", price: 25.00, type: "new", size: "UNI", condition: "10/10 (Nové)", sold: false, note: "", images: ["prada1.jpeg", "prada2.jpeg"] },
       { id: 14, brand: "Essentials", name: "Fear of God Sweat Shorts", category: "Teplákové kraťasy", price: 30.00, type: "second-hand", size: "M/L", condition: "9/10", sold: false, note: "Na fotkách pôsobia mierne do hneda v dôsledku fotoaparátu/osvetlenia.", images: ["essentials1.jpeg", "essentials2.jpeg", "essentials3.jpeg"] },
       { id: 15, brand: "Octagon", name: "Joker Make Terror Have Fun Hoodie", category: "Mikina s kapucňou", price: 45.00, type: "new", size: "M", condition: "10/10 (Nové)", sold: false, note: "", images: ["octagon1.jpeg", "octagon2.jpeg", "octagon3.jpeg"] },
@@ -288,112 +93,111 @@
       { id: 12, brand: "Moncler", name: "Puffer Vest", category: "Vesta", price: 30.00, type: "second-hand", size: "M", condition: "5/10", sold: false, note: "", images: ["monclervesta1.jpeg"] }
     ];
 
-    const productsEl = document.querySelector("#products");
-    let currentFilter = "all";
+    let currentTypeFilter = 'all';
+    let currentModalImages = [];
+    let currentImageIndex = 0;
 
-    function renderProducts(filter = "all") {
-      currentFilter = filter;
-      const list = filter === "all" ? products : products.filter(p => p.type === filter);
-      
-      productsEl.innerHTML = list.map(p => {
-        const primaryImg = p.images[0] || 'https://via.placeholder.com/400';
-        const igUrl = `https://instagram.com/${INSTAGRAM_PROFILE}`;
-        const isSold = p.sold;
-        
-        const tagText = p.type === "new" ? "NEW" : "SECOND HAND";
-        const buyBtnText = isSold ? "PREDANÉ" : "KÚPIŤ CEZ IG ↗";
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      grid.innerHTML = '';
 
-        return `
-          <article class="product ${isSold ? 'is-sold' : ''}" onclick="${isSold ? '' : `openModal(${p.id})`}">
-            <div class="product-image">
-              <span class="tag">${tagText}</span>
-              ${isSold ? `
-                <div class="sold-overlay">
-                  <span class="sold-badge">SOLD</span>
-                </div>
-              ` : ''}
-              <img src="${primaryImg}" alt="${p.brand} ${p.name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500/eee/333?text=${encodeURIComponent(p.brand)}';">
-            </div>
-            <div class="product-info">
-              <div>
-                <div class="product-row">
-                  <span class="product-name">${p.brand}</span>
-                  <span class="price">${p.price.toFixed(2).replace(".", ",")} €</span>
-                </div>
-                <div class="meta-line">${p.name}</div>
-                <div class="meta-line">Veľkosť: ${p.size}</div>
-              </div>
-              <a href="${isSold ? 'javascript:void(0)' : igUrl}" target="${isSold ? '_self' : '_blank'}" class="buy-btn" onclick="event.stopPropagation();">${buyBtnText}</a>
-            </div>
-          </article>
-        `;
-      }).join("");
-    }
-
-    function setFilterBtn(filter) {
-      document.querySelectorAll(".filter").forEach(x => {
-        x.classList.toggle("active", x.dataset.filter === filter);
+      const filtered = products.filter(p => {
+        const matchesSearch = p.brand.toLowerCase().includes(search) || p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search);
+        const matchesType = currentTypeFilter === 'all' || p.type === currentTypeFilter;
+        return matchesSearch && matchesType;
       });
-      renderProducts(filter);
+
+      filtered.forEach(p => {
+        const card = document.createElement('div');
+        card.className = `glass-card rounded-2xl overflow-hidden flex flex-col justify-between hover:border-slate-600 transition duration-300 ${p.sold ? 'opacity-60' : ''}`;
+        
+        const badgeColor = p.type === 'new' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+        const badgeText = p.type === 'new' ? 'Nové' : 'Second-Hand';
+
+        card.innerHTML = `
+          <div>
+            <div class="relative aspect-square overflow-hidden bg-slate-900 cursor-pointer" onclick="openModal(${p.id})">
+              <img src="${p.images[0]}" alt="${p.name}" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.onerror=null; if('${p.images[1]}') this.src='${p.images[1]}';">
+              ${p.sold ? '<div class="absolute inset-0 bg-black/70 flex items-center justify-center"><span class="text-red-500 font-extrabold text-2xl tracking-widest border-4 border-red-500 px-4 py-2 rounded-lg transform -rotate-12">PREDANÉ</span></div>' : ''}
+              <span class="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-full border ${badgeColor}">
+                ${badgeText}
+              </span>
+            </div>
+            <div class="p-5">
+              <div class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">${p.brand}</div>
+              <h2 class="text-lg font-bold text-white mb-2 leading-tight">${p.name}</h2>
+              
+              <div class="space-y-1 text-sm text-slate-300 mb-4">
+                <p><span class="text-slate-500">Kategória:</span> ${p.category}</p>
+                <p><span class="text-slate-500">Veľkosť:</span> <span class="font-semibold text-white">${p.size}</span></p>
+                <p><span class="text-slate-500">Stav:</span> ${p.condition}</p>
+                ${p.note ? `<p class="text-xs text-amber-300/80 mt-2 bg-amber-500/10 p-2 rounded border border-amber-500/20">${p.note}</p>` : ''}
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-5 pt-0 flex items-center justify-between mt-auto">
+            <span class="text-2xl font-extrabold text-emerald-400">${p.price.toFixed(2)} €</span>
+            <button onclick="openModal(${p.id})" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold rounded-lg border border-slate-700 transition">
+              Detail / Fotky
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
     }
 
-    function applyFilter(filter) {
-      setFilterBtn(filter);
-      document.querySelector("#shop").scrollIntoView({ behavior: 'smooth' });
+    function filterType(type) {
+      currentTypeFilter = type;
+      renderProducts();
     }
 
-    const modal = document.getElementById("productModal");
-    const modalMainImg = document.getElementById("modalMainImg");
-    const modalThumbs = document.getElementById("modalThumbs");
+    document.getElementById('searchInput').addEventListener('input', renderProducts);
 
     function openModal(id) {
-      const p = products.find(x => x.id === id);
-      if (!p || p.sold) return;
+      const product = products.find(p => p.id === id);
+      if (!product) return;
 
-      const modalTag = document.getElementById("modalTag");
-      modalTag.textContent = p.type === "new" ? "NEW" : "SECOND HAND";
+      currentModalImages = product.images;
+      currentImageIndex = 0;
 
-      document.getElementById("modalTitle").textContent = `${p.brand} — ${p.name}`;
-      document.getElementById("modalPrice").textContent = `${p.price.toFixed(2).replace(".", ",")} €`;
-      
-      let noteHtml = p.note ? `<br><strong>Poznámka:</strong> <span style="color:#c00;">${p.note}</span>` : '';
+      document.getElementById('modalTitle').innerText = `${product.brand} - ${product.name}`;
+      document.getElementById('modalPrice').innerText = `${product.price.toFixed(2)} €`;
+      document.getElementById('modalNote').innerText = product.note || '';
 
-      document.getElementById("modalDetails").innerHTML = `
-        <strong>Kategória:</strong> ${p.category}<br>
-        <strong>Veľkosť:</strong> ${p.size}<br>
-        <strong>Stav:</strong> ${p.condition}${noteHtml}<br>
-        <strong>Dostupnosť:</strong> Skladom (1 ks)
-      `;
-
-      const buyBtn = document.getElementById("modalBuyIg");
-      buyBtn.textContent = "KÚPIŤ CEZ INSTAGRAM ↗";
-      buyBtn.href = `https://instagram.com/${INSTAGRAM_PROFILE}`;
-
-      modalMainImg.src = p.images[0];
-      modalThumbs.innerHTML = p.images.map((img, idx) => `
-        <img src="${img}" class="modal-thumb ${idx === 0 ? 'active' : ''}" onclick="setModalImage('${img}', this)" alt="">
-      `).join("");
-
-      modal.classList.add("open");
-      document.querySelector("#overlay").classList.add("show");
-    }
-
-    function setModalImage(src, el) {
-      modalMainImg.src = src;
-      document.querySelectorAll(".modal-thumb").forEach(t => t.classList.remove("active"));
-      el.classList.add("active");
+      updateModalImage();
+      document.getElementById('imageModal').classList.remove('hidden');
     }
 
     function closeModal() {
-      modal.classList.remove("open");
-      document.querySelector("#overlay").classList.remove("show");
+      document.getElementById('imageModal').classList.add('hidden');
     }
 
-    document.getElementById("closeModal").onclick = closeModal;
-    document.querySelector("#overlay").onclick = closeModal;
+    function updateModalImage() {
+      const img = document.getElementById('modalImage');
+      img.src = currentModalImages[currentImageIndex];
 
-    document.querySelector("#newsletterForm").onsubmit = e => { e.preventDefault(); alert("Ďakujeme!"); e.target.reset(); };
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
 
+      if (currentModalImages.length <= 1) {
+        prevBtn.classList.add('hidden');
+        nextBtn.classList.add('hidden');
+      } else {
+        prevBtn.classList.remove('hidden');
+        nextBtn.classList.remove('hidden');
+      }
+    }
+
+    function changeImage(direction) {
+      currentImageIndex += direction;
+      if (currentImageIndex < 0) currentImageIndex = currentModalImages.length - 1;
+      if (currentImageIndex >= currentModalImages.length) currentImageIndex = 0;
+      updateModalImage();
+    }
+
+    // Inicializácia
     renderProducts();
   </script>
 </body>
