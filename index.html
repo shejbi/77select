@@ -1,349 +1,69 @@
-<!DOCTYPE html>
-<html lang="sk">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>77SELECT — Wear What You Select</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-:root{--black:#0a0a0a;--white:#f5f5f2;--line:#d7d7d2;--muted:#777;--pad:clamp(18px,4vw,56px)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--white);color:var(--black);font-family:Inter,Arial,sans-serif}a{color:inherit;text-decoration:none}
-
-.header{height:76px;padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--black);position:sticky;top:0;background:rgba(245,245,242,.94);backdrop-filter:blur(12px);z-index:20}
-.logo{font-size:22px;font-weight:900;letter-spacing:-1.5px}.logo span{font-weight:500;margin-left:3px}
-.nav{display:flex;gap:32px;font-size:11px;font-weight:700;letter-spacing:1px}
-.ig-btn-header{border:1px solid var(--black);background:var(--black);color:var(--white);padding:10px 16px;font-size:10px;font-weight:800;letter-spacing:1px}
-.ig-btn-header:hover{background:transparent;color:var(--black)}
-
-.hero{min-height:calc(100vh - 76px);display:grid;grid-template-columns:1.2fr .8fr;border-bottom:1px solid var(--black);overflow:hidden}
-.hero-copy{padding:clamp(40px,7vw,100px) var(--pad);display:flex;flex-direction:column;justify-content:center}
-.eyebrow{font-size:10px;font-weight:800;letter-spacing:2px;margin:0 0 20px}
-.hero h1{font-size:clamp(62px,11vw,170px);line-height:.82;letter-spacing:-.075em;margin:0;font-weight:900}
-.hero h1 span{font-weight:400}
-.hero-text{max-width:420px;font-size:14px;line-height:1.6;margin:35px 0}
-.hero-art{background:var(--black);color:var(--white);display:grid;place-items:center;position:relative}
-.circle{width:min(32vw,380px);height:min(32vw,380px);border:1px solid #555;border-radius:50%;display:grid;place-items:center;font-size:clamp(90px,14vw,190px);font-weight:900;letter-spacing:-.08em}
-.vertical{position:absolute;right:25px;top:50%;writing-mode:vertical-rl;transform:translateY(-50%);font-size:9px;letter-spacing:3px}
-.button{border:1px solid var(--black);padding:15px 20px;display:inline-flex;align-items:center;justify-content:space-between;gap:35px;cursor:pointer;font-size:10px;font-weight:800;letter-spacing:1.5px;width:max-content}
-.button-light{background:var(--white)}
-
-.ticker{background:var(--black);color:white;overflow:hidden;white-space:nowrap;padding:13px 0;font-size:11px;font-weight:800;letter-spacing:2px}
-.ticker div{width:max-content;animation:move 20s linear infinite}@keyframes move{to{transform:translateX(-50%)}}
-
-.section{padding:100px var(--pad)}
-.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:45px}
-.section-head h2{font-size:clamp(44px,7vw,92px);letter-spacing:-.06em;margin:0;line-height:.9}
-
-.products{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--black);border:1px solid var(--black)}
-.product{background:var(--white);position:relative;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform 0.2s}
-.product:hover{transform:translateY(-3px)}
-
-.product-image-container{aspect-ratio:4/5;background:#eee;position:relative;overflow:hidden}
-.product-image-container img{width:100%;height:100%;object-fit:cover;display:block}
-
-.tag{position:absolute;left:12px;top:12px;background:var(--black);color:white;padding:6px 8px;font-size:8px;font-weight:800;letter-spacing:1px;z-index:2}
-.photo-count-badge{position:absolute;right:12px;bottom:12px;background:rgba(0,0,0,0.7);color:white;padding:4px 8px;font-size:10px;font-weight:700;border-radius:3px}
-
-.product-info{padding:20px;display:flex;flex-direction:column;gap:8px}
-.product-row{display:flex;justify-content:space-between;gap:10px}
-.product-name{font-size:14px;font-weight:800;text-transform:uppercase}
-.price{font-size:14px;font-weight:900}
-.meta{color:var(--muted);font-size:11px;font-weight:600}
-.add{width:100%;margin-top:12px;padding:13px;border:1px solid var(--black);background:transparent;font-size:9px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-align:center;display:block}
-.add:hover{background:var(--black);color:white}
-
-/* MODAL OKNO FOR DETAIL */
-.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:100;padding:20px}
-.modal-overlay.active{display:flex}
-.modal-content{background:var(--white);max-width:900px;width:100%;max-height:90vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;position:relative;border:1px solid var(--black)}
-.modal-close{position:absolute;top:15px;right:15px;background:var(--black);color:white;border:none;width:36px;height:36px;font-size:20px;cursor:pointer;z-index:10;display:grid;place-items:center}
-
-.gallery-container{position:relative;background:#000;display:flex;align-items:center;justify-content:center;aspect-ratio:4/5}
-.gallery-container img{max-width:100%;max-height:100%;object-fit:contain}
-.gallery-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.8);border:none;width:40px;height:40px;font-size:18px;font-weight:bold;cursor:pointer;z-index:5}
-.gallery-btn:hover{background:#fff}
-.gallery-btn.prev{left:10px}
-.gallery-btn.next{right:10px}
-
-.modal-details{padding:40px;display:flex;flex-direction:column;justify-content:space-between;overflow-y:auto}
-.modal-tag{align-self:flex-start;background:var(--black);color:white;padding:6px 10px;font-size:9px;font-weight:800;letter-spacing:1px;margin-bottom:15px}
-.modal-title{font-size:24px;font-weight:900;margin:0 0 10px;text-transform:uppercase}
-.modal-price{font-size:22px;font-weight:900;margin-bottom:20px}
-.modal-meta{font-size:13px;color:#555;margin-bottom:25px;line-height:1.6;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0}
-.modal-btn{background:var(--black);color:white;padding:16px;text-align:center;font-size:11px;font-weight:800;letter-spacing:1.5px;display:block}
-.modal-btn:hover{opacity:0.9}
-
-.manifesto{background:var(--black);color:var(--white);min-height:60vh;display:flex;flex-direction:column;justify-content:center}
-.manifesto h2{font-size:clamp(48px,9vw,125px);letter-spacing:-.07em;line-height:.86;margin:0 0 30px}
-.manifesto h2 span{font-weight:400}
-.manifesto p{max-width:580px;color:#bbb;line-height:1.7;font-size:14px}
-
-.footer{border-top:1px solid var(--black);padding:35px var(--pad);display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:10px;font-weight:700;letter-spacing:1px}
-
-@media(max-width:900px){.products{grid-template-columns:repeat(2,1fr)}.modal-content{grid-template-columns:1fr;max-height:85vh;overflow-y:auto}}
-@media(max-width:760px){
-  .nav{display:none}
-  .hero{grid-template-columns:1fr}
-  .hero-art{min-height:40vh}
-  .circle{width:200px;height:200px}
-  .products{grid-template-columns:1fr}
+{
+  "items": [
+    {
+      "brand": "Gianni Kavanagh",
+      "category": "Rifle / Džínsy",
+      "images": ["gianni1.jpg", "gianni2.jpg", "gianni3.jpg"]
+    },
+    {
+      "brand": "Ninetytwo",
+      "category": "Teplákové kraťasy",
+      "images": ["GreyShort1.jpg"]
+    },
+    {
+      "brand": "Lacoste",
+      "category": "Mikina s kapucňou",
+      "images": ["lacoste1.jpg"]
+    },
+    {
+      "brand": "Louis Vuitton",
+      "category": "Opasok",
+      "images": ["luis1.jpg", "luis2.jpg"]
+    },
+    {
+      "brand": "Moncler",
+      "category": "Polo tričko",
+      "images": ["moncler1.jpg", "moncler2.jpg"]
+    },
+    {
+      "brand": "Moncler",
+      "category": "Vesta",
+      "images": ["monclervesta1.jpg"]
+    },
+    {
+      "brand": "Nike / FC Barcelona",
+      "category": "Tepláky",
+      "images": ["nike1.jpg", "nike2.jpg"]
+    },
+    {
+      "brand": "Supply & Demand",
+      "category": "Teplákové kraťasy",
+      "images": ["supplykratase1.jpg", "supplykratase2.jpg"]
+    },
+    {
+      "brand": "Supply & Demand",
+      "category": "Rifle / Džínsy",
+      "images": ["supplyrifle1.jpg", "supplyrifle2.jpg"]
+    },
+    {
+      "brand": "Under Armour",
+      "category": "Nátelník / Zips tričko",
+      "images": ["underarmour1.jpg", "underarmour2.jpg"]
+    },
+    {
+      "brand": "Denim Tears",
+      "category": "Mikina",
+      "images": ["denim1_2.jpg", "denim2_2.jpg"]
+    },
+    {
+      "brand": "Nike x Supreme",
+      "category": "Tenisky (Air Force 1 Low)",
+      "images": ["airforce1_2.jpg"]
+    },
+    {
+      "brand": "Nike",
+      "category": "Tenisky (Air Max 95)",
+      "images": ["airmax1_2.jpg", "airmax2_2.jpg"]
+    }
+  ]
 }
-  </style>
-</head>
-<body>
-
-  <header class="header">
-    <a class="logo" href="#home">77<span>SELECT</span></a>
-    <nav class="nav">
-      <a href="#shop">CATALOG</a>
-      <a href="#about">ABOUT</a>
-      <a href="https://ig.me/m/77se.lect" target="_blank">INSTAGRAM</a>
-    </nav>
-    <a href="https://ig.me/m/77se.lect" target="_blank" class="ig-btn-header">DM (@77SE.LECT)</a>
-  </header>
-
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-copy">
-        <p class="eyebrow">77SELECT / CURATED CLOTHING</p>
-        <h1>WEAR<br><span>WHAT</span><br>YOU SELECT.</h1>
-        <p class="hero-text">Nové kúsky. Second hand. Vybrané bez zbytočností.</p>
-        <a class="button button-light" href="#shop">ZOBRAZIŤ KATALÓG <span>↘</span></a>
-      </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="circle">77</div>
-        <div class="vertical">SELECTED / NOT RANDOM</div>
-      </div>
-    </section>
-
-    <section class="ticker" aria-label="77SELECT">
-      <div>77SELECT ★ WEAR WHAT YOU SELECT ★ NEW & SECOND HAND ★ 77SELECT ★ WEAR WHAT YOU SELECT ★ NEW & SECOND HAND ★</div>
-    </section>
-
-    <section class="shop section" id="shop">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">PERSONAL WARDROBE SALE</p>
-          <h2>SHOP</h2>
-        </div>
-      </div>
-
-      <div class="products" id="productGrid">
-        <!-- Vykresľuje JavaScript -->
-      </div>
-    </section>
-
-    <section class="manifesto section" id="about">
-      <p class="eyebrow">WHY 77SELECT</p>
-      <h2>LESS NOISE.<br><span>MORE STYLE.</span></h2>
-      <p>77SELECT je miesto pre kúsky, ktoré si vyberieš preto, že ich chceš nosiť — nie preto, že ich má každý.</p>
-    </section>
-  </main>
-
-  <!-- MODAL DETAIL OKNO -->
-  <div class="modal-overlay" id="modal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      <div class="gallery-container">
-        <button class="gallery-btn prev" id="prevBtn" onclick="changeImage(-1)">❮</button>
-        <img id="modalImg" src="" alt="Detail produktu">
-        <button class="gallery-btn next" id="nextBtn" onclick="changeImage(1)">❯</button>
-      </div>
-      <div class="modal-details">
-        <div>
-          <span class="modal-tag" id="modalTag">NEW</span>
-          <h2 class="modal-title" id="modalTitle">Názov produktu</h2>
-          <div class="modal-price" id="modalPrice">0 €</div>
-          <div class="modal-meta" id="modalMeta"></div>
-        </div>
-        <a href="https://ig.me/m/77se.lect" target="_blank" class="modal-btn">MÁM ZÁUJEM (POSLAŤ DM) ↗</a>
-      </div>
-    </div>
-  </div>
-
-  <footer class="footer">
-    <div class="logo">77<span>SELECT</span></div>
-    <p>© 2026 77SELECT. ALL RIGHTS RESERVED.</p>
-  </footer>
-
-  <script>
-    // PRESNÝ ZOZNAM PRODUKTOV S ICH VLASTNÝMI OBRÁZKAMI
-    const products = [
-      {
-        id: 1,
-        name: "Nike Air Force 1 Low x Supreme",
-        price: "50 €",
-        tag: "SECOND HAND (8/10)",
-        size: "45.5",
-        desc: "Stav 8/10, minimálne nosené, bez poškodení. Dodávané bez krabice.",
-        images: ["IMG_2958.jpeg"]
-      },
-      {
-        id: 2,
-        name: "DSQUARED2 Distressed Jeans",
-        price: "50 €",
-        tag: "NEW",
-        size: "M",
-        desc: "Úplne nové nohavice s visačkou. Kvalitný džínový materiál s distressed detailmi.",
-        images: ["IMG_2961.jpeg"]
-      },
-      {
-        id: 3,
-        name: "Nike Air Max 95 Triple Black",
-        price: "35 €",
-        tag: "SECOND HAND (6/10)",
-        size: "44",
-        desc: "Stav 6/10. Mierne známky používania, podrážka v dobróm stave.",
-        images: ["IMG_2965.jpeg"]
-      },
-      {
-        id: 4,
-        name: "Moncler Vesta",
-        price: "60 €",
-        tag: "SECOND HAND (9/10)",
-        size: "M",
-        desc: "Púperová vesta Moncler, výborný stav bez poškodení.",
-        images: ["IMG_2970.jpeg"] // Ak máš iné číslo fotky pre vestu, stačí upraviť tu
-      },
-      {
-        id: 5,
-        name: "Moncler Modré Polo Tričko",
-        price: "40 €",
-        tag: "SECOND HAND (9/10)",
-        size: "S",
-        desc: "Ako nové, nosené len párkrát. 100% bavlna.",
-        images: ["IMG_2979.jpeg"]
-      },
-      {
-        id: 6,
-        name: "Supply & Demand Jeans",
-        price: "25 €",
-        tag: "NEW",
-        size: "M",
-        desc: "Nové džínsy, slim fit strih.",
-        images: ["IMG_2977.jpeg"]
-      },
-      {
-        id: 7,
-        name: "Louis Vuitton Holografický Opasok",
-        price: "30 €",
-        tag: "SECOND HAND (9/10)",
-        size: "S (85 cm)",
-        desc: "Unikátny holografický dizajn s kovovou prackou.",
-        images: ["IMG_2975.jpeg"]
-      },
-      {
-        id: 8,
-        name: "Gianni Kavanagh Jeans",
-        price: "40 €",
-        tag: "NEW",
-        size: "S",
-        desc: "Nové džínsy so štýlovými nášivkami.",
-        images: ["IMG_2981.jpeg"]
-      },
-      {
-        id: 9,
-        name: "Grey Short \"ninetytwo\"",
-        price: "30 €",
-        tag: "SECOND HAND (9/10)",
-        size: "M",
-        desc: "Pohodlné kraťasy, bez známok opotrebenia.",
-        images: ["IMG_2966.jpeg"]
-      },
-      {
-        id: 10,
-        name: "Nike FC Barcelona Longsleeve / Dres",
-        price: "30 €",
-        tag: "NEW",
-        size: "S",
-        desc: "Tréningový dres / longsleeve Nike FC Barcelona.",
-        images: ["IMG_2968.jpeg", "IMG_2955.jpeg"] // Tvoj obrázok z fotky
-      },
-      {
-        id: 11,
-        name: "Lacoste Biela Mikina s Kapucňou",
-        price: "30 €",
-        tag: "NEW",
-        size: "M",
-        desc: "Čistá biela mikina Lacoste s kapucňou.",
-        images: ["IMG_2957.jpeg"]
-      },
-      {
-        id: 12,
-        name: "Denim Tears Cotton Wreath Mikina",
-        price: "40 €",
-        tag: "NEW",
-        size: "M",
-        desc: "Stredne hrubá mikina s ikonickou potlačou.",
-        images: ["IMG_2972.jpeg"]
-      }
-    ];
-
-    let currentProduct = null;
-    let currentImageIndex = 0;
-
-    // Vykreslenie produktov
-    const grid = document.getElementById('productGrid');
-    grid.innerHTML = products.map(p => `
-      <article class="product" onclick="openModal(${p.id})">
-        <div class="product-image-container">
-          <span class="tag">${p.tag}</span>
-          <img src="${p.images[0]}" onerror="this.src='https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600'" alt="${p.name}">
-          ${p.images.length > 1 ? `<span class="photo-count-badge">1 / ${p.images.length} 📷</span>` : ''}
-        </div>
-        <div class="product-info">
-          <div class="product-row">
-            <span class="product-name">${p.name}</span>
-            <span class="price">${p.price}</span>
-          </div>
-          <div class="meta">SIZE: ${p.size}</div>
-          <button class="add">ZOBRAZIŤ DETAIL A FOTKY ↗</button>
-        </div>
-      </article>
-    `).join('');
-
-    // Modal funkcie
-    function openModal(id) {
-      currentProduct = products.find(p => p.id === id);
-      currentImageIndex = 0;
-      updateModalContent();
-      document.getElementById('modal').classList.add('active');
-    }
-
-    function closeModal() {
-      document.getElementById('modal').classList.remove('active');
-    }
-
-    function updateModalContent() {
-      document.getElementById('modalTag').innerText = currentProduct.tag;
-      document.getElementById('modalTitle').innerText = currentProduct.name;
-      document.getElementById('modalPrice').innerText = currentProduct.price;
-      document.getElementById('modalMeta').innerHTML = `
-        <strong>VEĽKOSŤ:</strong> ${currentProduct.size}<br><br>
-        <strong>POPIS:</strong> ${currentProduct.desc}<br><br>
-        <strong>FOTKA:</strong> ${currentImageIndex + 1} z ${currentProduct.images.length}
-      `;
-      document.getElementById('modalImg').src = currentProduct.images[currentImageIndex];
-
-      // Skryť šípky, ak produkt má iba 1 fotku
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      if (currentProduct.images.length <= 1) {
-        prevBtn.style.display = 'none';
-        nextBtn.style.display = 'none';
-      } else {
-        prevBtn.style.display = 'block';
-        nextBtn.style.display = 'block';
-      }
-    }
-
-    function changeImage(dir) {
-      if (!currentProduct || currentProduct.images.length <= 1) return;
-      currentImageIndex = (currentImageIndex + dir + currentProduct.images.length) % currentProduct.images.length;
-      updateModalContent();
-    }
-  </script>
-</body>
-</html>
